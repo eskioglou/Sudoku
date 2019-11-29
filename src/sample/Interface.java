@@ -8,31 +8,42 @@ public class Interface {
     int value;
     Tables tab = new Tables();
 
-    public Interface(int numi, int numj){
-        this.numi = numi;
-
+    public Interface(){
 
     }
 
     void start(){
+        tab.createMatrix();
+        tab.solutionMatrix();
         do{
             do {
+                tab.displayMatrix();
                 System.out.println("Give x coordinate");
                 Scanner scanneri = new Scanner(System.in);
                 numi = scanneri.nextInt();
-            }while(numi<1 || numi>9);
+            }while(numi<0 || numi>8);
             do{
                 System.out.println("Give y coordinate");
                 Scanner scannerj = new Scanner(System.in);
                 numj = scannerj.nextInt();
-            }while(numj<1 || numj>9);
+            }while(numj<0 || numj>8);
             if(isEmpty(numi, numj)){
                 do {
                     System.out.println("Give value");
-                    Scanner value = new Scanner(System.in);
-                    value.nextInt();
-                }while(numi<1 || numi>9);
-                tab.setCell(numi, numj, value);
+                    Scanner v = new Scanner(System.in);
+                    value = v.nextInt();
+                }while(value<1 || value>9);
+                if(!tab.existsColumn(numi, numj, value) && !tab.existsRow(numi, numj, value)&& !tab.existsGrid(numi, numj, value)){
+                    tab.setCell(numi, numj, value);
+                    System.out.println("value set");
+                }
+                else{
+                    System.out.println("check failed");
+                }
+
+            }
+            else{
+                System.out.println("Occupied cell");
             }
         }while(!endGame());
 
