@@ -6,24 +6,28 @@ import java.util.Scanner;
 
 
 public class Tables {
-    private int dimension = 9;
+    public int dimension;
     int[] matrix[];
     int[] matrix2[];
 
 
 
-    Tables(){
+    Tables(int dimension){
         matrix = new int[dimension][dimension];
         matrix2 = new int[dimension][dimension];
+        this.dimension = dimension;
     }
 
+    public int getDimension(){
+        return dimension;
+    }
 
     void createMatrix(){
-        File file = new File("C:\\Users\\USER\\Desktop\\Σχολή\\sudoku\\src\\sample\\s1.txt");
+        File file = new File("C:\\Users\\USER\\Desktop\\here\\src\\sample\\s1.txt");
         try{
             Scanner sc = new Scanner(file);
-            for(int i= 0; i<9; i++){
-                for(int j= 0; j<9; j++){
+            for(int i= 0; i<dimension; i++){
+                for(int j= 0; j<dimension; j++){
                     matrix[i][j] = sc.nextInt();
                 }
             }
@@ -35,22 +39,22 @@ public class Tables {
 
     }
     void displayMatrix(){
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
+        for(int i=0;i<dimension;i++){
+            for(int j=0;j<dimension;j++){
                 System.out.print(matrix[i][j] +" ");
             }
             System.out.println(" ");
         }
     }
     void solutionMatrix(){
-        File file = new File("C:\\Users\\USER\\Desktop\\Σχολή\\sudoku\\src\\sample\\s1.txt");
+        File file = new File("C:\\Users\\USER\\Desktop\\here\\src\\sample\\s1.txt");
         try{
             Scanner sc = new Scanner(file);
-            for(int i=0; i<10; i++){
+            for(int i=0; i<=dimension; i++){            //it must equal the dimension so that it can read the extra line of the file
                 sc.nextLine();
             }
-            for(int i= 0; i<9; i++){
-                for(int j= 0; j<9; j++){
+            for(int i= 0; i<dimension; i++){
+                for(int j= 0; j<dimension; j++){
                     matrix2[i][j] = sc.nextInt();
                 }
             }
@@ -62,8 +66,8 @@ public class Tables {
         }
     }
     void displaySolution(){
-        for(int i=0;i<9;i++){
-            for(int j=0;j<9;j++){
+        for(int i=0;i<dimension;i++){
+            for(int j=0;j<dimension;j++){
                 System.out.print(matrix2[i][j] +" ");
             }
             System.out.println(" ");
@@ -79,7 +83,7 @@ public class Tables {
     }
 
     boolean existsColumn(int numi, int numj, int value) {
-        for (int row = 0; row < 9; row++) {
+        for (int row = 0; row < dimension; row++) {
             if(row!=numi) {
                 if (value == matrix[row][numj]) {
                     return true;
@@ -90,7 +94,7 @@ public class Tables {
     }
 
     boolean existsRow(int numi, int numj, int value) {
-        for (int col = 0; col < 9; col++) {
+        for (int col = 0; col < dimension; col++) {
             if (col != numj) {
                 if (matrix[numi][col] == value) {
                     return true;
@@ -102,81 +106,48 @@ public class Tables {
 
     boolean existsGrid(int numi, int numj, int value){
 
-        int w = numi%3;
-        int z = numj%3;
+        int w = (int) (numi% Math.sqrt(dimension));
+
         boolean flag = false;
         if(w==0){
-            for(int i=w; i<=w+2; i++){
-                if(z==0){
-                    for(int j=z; j<=z+2; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
-                else if(z==1){
-                    for(int j=z-1; j<=z+1; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
-                else{
-                    for(int j=z-2; j<=z; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
+            for(int i=numi; i<=numi+Math.sqrt(dimension)-1; i++){
+                flag = insideLoop(i, numj, value);
             }
         }
         else if(w==1){
-            for(int i=w-1; i<=w+1; i++){
-                if(z==0){
-                    for(int j=z; j<=z+2; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
+            for(int i=numi-1; i<=numi+Math.sqrt(dimension)-2; i++){
+                flag = insideLoop(i, numj, value);
+            }
+        }
+        else{
+            for(int i=numi-2; i<=numi; i++){
+                flag = insideLoop(i, numj, value);
+            }
+        }
+        return flag;
+    }
+
+    boolean insideLoop(int i, int numj, int value){
+        int z = (int) (numj% Math.sqrt(dimension));
+        boolean flag = false;
+        if(z==0){
+            for(int j=numj; j<=numj+Math.sqrt(dimension)-1; j++){
+                if(value==matrix[i][j]){
+                    flag = true;
                 }
-                else if(z==1){
-                    for(int j=z-1; j<=z+1; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
-                else{
-                    for(int j=z-2; j<=z; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
+            }
+        }
+        else if(z==1){
+            for(int j=numj-1; j<=numj+Math.sqrt(dimension)-2; j++){
+                if(value==matrix[i][j]){
+                    flag = true;
                 }
             }
         }
         else{
-            for(int i=w-2; i<=w; i++){
-                if(z==0){
-                    for(int j=z; j<=z+2; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
-                else if(z==1){
-                    for(int j=z-1; j<=z+1; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
-                }
-                else{
-                    for(int j=z-2; j<=z; j++){
-                        if(value==matrix[i][j]){
-                            flag = true;
-                        }
-                    }
+            for(int j=numj-2; j<=numj; j++){
+                if(value==matrix[i][j]){
+                    flag = true;
                 }
             }
         }
