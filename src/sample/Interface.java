@@ -10,7 +10,7 @@ public class Interface {
     Duidoku dui = new Duidoku();
 
     void start(){
-        sample.Welcome n=new sample.Welcome();
+        //sample.Welcome n=new sample.Welcome();
 
         int ver = chooseVersion();
         if (ver == 1){

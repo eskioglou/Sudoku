@@ -2,6 +2,7 @@ package sample;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -23,9 +24,17 @@ public class Tables {
     }
 
     void createMatrix(){
-        File file = new File("C:\\Users\\USER\\Desktop\\here\\src\\sample\\s1.txt");
+        File file;
+        file = new File("C:\\Users\\USER\\IdeaProjects\\sudoku-3237_311612\\src\\sample\\sudoku");
+        //Creating the directory
+        boolean bool = file.mkdir();
+
+        File[] s = file.listFiles();
+        Random rand = new Random();
+        File file1 = s[rand.nextInt(s.length)];
+
         try{
-            Scanner sc = new Scanner(file);
+            Scanner sc = new Scanner(file1);
             for(int i= 0; i<dimension; i++){
                 for(int j= 0; j<dimension; j++){
                     matrix[i][j] = sc.nextInt();
@@ -105,33 +114,33 @@ public class Tables {
     }
 
     boolean existsGrid(int numi, int numj, int value){
-
         int w = (int) (numi% Math.sqrt(dimension));
+
 
         boolean flag = false;
         if(w==0){
             for(int i=numi; i<=numi+Math.sqrt(dimension)-1; i++){
-                flag = insideLoop(i, numj, value);
+                flag = insideLoop(i, numj, value, flag);
             }
         }
         else if(w==1){
             for(int i=numi-1; i<=numi+Math.sqrt(dimension)-2; i++){
-                flag = insideLoop(i, numj, value);
+                flag = insideLoop(i, numj, value, flag);
             }
         }
         else{
             for(int i=numi-2; i<=numi; i++){
-                flag = insideLoop(i, numj, value);
+                flag = insideLoop(i, numj, value, flag);
             }
         }
         return flag;
     }
 
-    boolean insideLoop(int i, int numj, int value){
+    boolean insideLoop(int i, int numj, int value, boolean flag){
         int z = (int) (numj% Math.sqrt(dimension));
-        boolean flag = false;
         if(z==0){
             for(int j=numj; j<=numj+Math.sqrt(dimension)-1; j++){
+               // System.out.println(" x and y " + i + j);
                 if(value==matrix[i][j]){
                     flag = true;
                 }
@@ -139,6 +148,7 @@ public class Tables {
         }
         else if(z==1){
             for(int j=numj-1; j<=numj+Math.sqrt(dimension)-2; j++){
+               // System.out.println(" x and y " + i + j);
                 if(value==matrix[i][j]){
                     flag = true;
                 }
@@ -146,6 +156,7 @@ public class Tables {
         }
         else{
             for(int j=numj-2; j<=numj; j++){
+                //System.out.println(" x and y " + i + j);
                 if(value==matrix[i][j]){
                     flag = true;
                 }
