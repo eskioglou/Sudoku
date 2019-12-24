@@ -87,8 +87,9 @@ public class Tables {
         return matrix[i][j];
     }
 
-    void setCell(int i, int j, int value){
+    boolean setCell(int i, int j, int value){
         matrix[i][j] = value;
+        return true;
     }
 
     boolean existsColumn(int numi, int numj, int value) {

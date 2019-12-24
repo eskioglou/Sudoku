@@ -1,5 +1,7 @@
 package sample;
 
+import java.util.Random;
+
 public class Duidoku extends Tables{
     public int numi;
     public int numj;

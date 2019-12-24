@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Interface {
@@ -90,7 +91,12 @@ public class Interface {
             dui.displayMatrix();
             getCoords(4);
             if(isDuidokuEmpty(numi, numj)){
-                checkDuidokuAccept();
+                boolean acpt = checkDuidokuAccept( getValue());
+                if(acpt){
+                    makeInactive();
+                    dui.displayMatrix();
+                    movePC(acpt);
+                }
             }
             else{
                 System.out.println("Occupied cell");
@@ -112,21 +118,43 @@ public class Interface {
         }while(numj<0 || numj>dimension-1);
 
     }
-    void checkDuidokuAccept(){
+    public int getValue(){
         do {
             System.out.println("Give value");
             Scanner v = new Scanner(System.in);
             value = v.nextInt();
         }while(value<1 || value>4);
+        return value;
+    }
+    boolean checkDuidokuAccept(int value){
         if(!dui.existsColumn(numi, numj, value) && !dui.existsRow(numi, numj, value)&& !dui.existsGrid(numi, numj, value)){
-            dui.setCell(numi, numj, value);
+            boolean done = dui.setCell(numi, numj, value);
             System.out.println("value set");
-            makeInactive();
+            return true;
         }
         else{
             System.out.println("check failed");
+            return false;
         }
     }
+    public boolean movePC(boolean done){
+        if (done){
+            boolean acpt;
+            do {
+                Random ran = new Random();
+                do {
+                    numi = ran.nextInt(4);
+                    numj = ran.nextInt(4);
+                }while (dui.getCell(numi, numj) != 0);
+                int v = 1 + ran.nextInt(4);
+                acpt = checkDuidokuAccept(v);
+                if(acpt){
+                    makeInactive();
+                }
+            }while(!acpt);
+        }return true;
+    }
+
     public void makeInactive(){
         for(int i = 0; i<4; i++){
             for(int j = 0; j<4; j++){
