@@ -5,8 +5,10 @@ package sample;
 class Main {
     public static void main(String[] args) {
 
-        Interface inter = new Interface();
-        inter.start();
+        Welcome wel= new Welcome();
+
+        //Interface inter = new Interface();
+        //inter.start();
 
     }
 

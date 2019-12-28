@@ -3,8 +3,11 @@ package sample;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.border.EmptyBorder;
 
 import static java.awt.Transparency.BITMASK;
@@ -22,7 +25,7 @@ public class Welcome {
     public Welcome(){ makeFrame();}
     private void makeFrame(){
         frame=new JFrame();
-        frame.setSize(400, 300);
+        frame.setSize(600, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
@@ -63,11 +66,21 @@ public class Welcome {
             }
         });
 
+        //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension d = t.getScreenSize();
         int x = (d.width-frame.getWidth())/2;
         int y = (d.height-frame.getHeight())/2;
         frame.setLocation(x, y);
+
+        //Set Image Icon
+        ImageIcon icon= new ImageIcon();
+        try {
+            frame.setIconImage(ImageIO.read(new File("C:\\Users\\Anastasia Kara\\Desktop\\512x512bb.jpg")));
+        }
+        catch(IOException ex) {
+            System.out.println("When reading icon file: " + ex.getMessage());
+        }
 
         panel=new JPanel(new BorderLayout());
         panel.setBorder(new EmptyBorder(2,3,2,3));

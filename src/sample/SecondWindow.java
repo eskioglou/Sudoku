@@ -1,21 +1,20 @@
 package sample;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+
 public class SecondWindow {
     private JFrame frame= new JFrame();
-    private JPanel first;
-    private JPanel second;
-    private JPanel third;
     private JPanel panel;
-    private JCheckBox checkBox;
     private JButton sudokubutton= new JButton();
     private JButton killerbutton= new JButton();
     private JButton duidokubutton= new JButton();
     private JLabel label= new JLabel();
-    private SudokuFrame obj;
 
 
     public SecondWindow(){
@@ -23,7 +22,7 @@ public class SecondWindow {
     }
     void makeFrame(){
         frame.setTitle("Sudoku Game");
-        frame.setSize(400,300);
+        frame.setSize(600,500);
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -59,11 +58,21 @@ public class SecondWindow {
                 SudokuFrame f=new SudokuFrame();
             }
         });
+        //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension d = t.getScreenSize();
         int x = (d.width-frame.getWidth())/2;
         int y = (d.height-frame.getHeight())/2;
         frame.setLocation(x, y);
+
+        //Set Image Icon
+        ImageIcon icon= new ImageIcon();
+        try {
+            frame.setIconImage(ImageIO.read(new File("C:\\Users\\Anastasia Kara\\Desktop\\512x512bb.jpg")));
+        }
+        catch(IOException ex) {
+            System.out.println("When reading icon file: " + ex.getMessage());
+        }
 
 
         label.setText("Choose a version: ");
