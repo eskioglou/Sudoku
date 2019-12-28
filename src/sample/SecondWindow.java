@@ -32,9 +32,14 @@ public class SecondWindow {
         sudokubutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SudokuFrame f= new SudokuFrame();
+                JFileChooser chooser = new JFileChooser();
+                int status = chooser.showOpenDialog(frame);
+
+                if (status == JFileChooser.APPROVE_OPTION) {
+                    File file = chooser.getSelectedFile();
             }
+        }
+
         });
 
         killerbutton = new JButton();
@@ -44,7 +49,7 @@ public class SecondWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.dispose();
-                SudokuFrame f= new SudokuFrame();
+                SudokuFrame f= new SudokuFrame(9);
             }
         });
 
@@ -55,7 +60,7 @@ public class SecondWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.dispose();
-                SudokuFrame f=new SudokuFrame();
+                SudokuFrame f=new SudokuFrame(4);
             }
         });
         //Center View

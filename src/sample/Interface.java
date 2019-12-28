@@ -34,7 +34,7 @@ public class Interface {
 
     void playSudoku(){
         tab.createMatrix();
-        tab.solutionMatrix();
+        //tab.solutionMatrix();
         do{
             tab.displayMatrix();
             getCoords(9);
