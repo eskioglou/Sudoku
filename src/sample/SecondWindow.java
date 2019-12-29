@@ -73,7 +73,7 @@ public class SecondWindow {
         //Set Image Icon
         ImageIcon icon= new ImageIcon();
         try {
-            frame.setIconImage(ImageIO.read(new File("C:\\Users\\Anastasia Kara\\Desktop\\512x512bb.jpg")));
+            frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
         }
         catch(IOException ex) {
             System.out.println("When reading icon file: " + ex.getMessage());
