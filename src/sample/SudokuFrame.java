@@ -51,9 +51,12 @@ import javax.swing.*;
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
 
+            GameReader reader= new GameReader(9, "src/sample/sudoku/s1.txt");
+            int[][] startingSudoku= reader.getUnsolvedSudoku();
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
                     Tf[i][j] = new JTextField();
+                    Tf[i][j].setText(startingSudoku[i][j] +"");
                     f.add(Tf[i][j]);
                 }
             }
