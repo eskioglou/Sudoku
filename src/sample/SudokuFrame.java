@@ -1,30 +1,14 @@
 package sample;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Scanner;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
     public class SudokuFrame extends JPanel {
-        private Tables obj;
-        private File f1;
         private JFrame f;
 
         SudokuFrame(int dimension) {
@@ -44,7 +28,7 @@ import javax.swing.*;
             f.setLocation(x, y);
 
             //Set Image Icon
-            ImageIcon icon = new ImageIcon();
+            new ImageIcon();
             try {
                 f.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
             } catch (IOException ex) {
@@ -63,27 +47,24 @@ import javax.swing.*;
 
             JButton b = new JButton("Solve");
             f.add(b);
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int sudb[][] = new int[dimension+1][dimension+1];
-                    int suda[][] = new int[dimension+1][dimension+1];
-                    for (int i = 1; i <= dimension; i++) {
-                        for (int j = 1; j <= dimension; j++) {
-                            try {
-                                if ((Tf[i][j].getText()) == "") sudb[i][j] = 0;
-                                else {
-                                    sudb[i][j] = Integer.parseInt(Tf[i][j].getText());
-                                }
-                            } catch (Exception ee) {//System.out.println("error"+ee);
+            b.addActionListener(e -> {
+                int[][] sudb = new int[dimension+1][dimension+1];
+                int[][] suda = new int[dimension+1][dimension+1];
+                for (int i = 1; i <= dimension; i++) {
+                    for (int j = 1; j <= dimension; j++) {
+                        try {
+                            if (Tf[i][j].getText().equals("")) sudb[i][j] = 0;
+                            else {
+                                sudb[i][j] = Integer.parseInt(Tf[i][j].getText());
                             }
+                        } catch (Exception ee) {//System.out.println("error"+ee);
                         }
                     }
+                }
 
-                    for (int i = 1; i <= dimension; i++) {
-                        for (int j = 1; j <= dimension; j++) {
-                            Tf[i][j].setText("" + suda[i][j]);
-                        }
+                for (int i = 1; i <= dimension; i++) {
+                    for (int j = 1; j <= dimension; j++) {
+                        Tf[i][j].setText("" + suda[i][j]);
                     }
                 }
             });

@@ -1,26 +1,14 @@
 package sample;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.BorderLayout;
+import javax.swing.border.EmptyBorder;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.border.EmptyBorder;
-
-import static java.awt.Transparency.BITMASK;
 
 public class Welcome {
     private JFrame frame;
-    private JPanel panel;
-    private JPanel sec;
-    private JPanel third;
-    private JButton signIn;
-    private JButton signUp;
-    private JButton anon;
-    private JTextField textField;
 
     public Welcome(){ makeFrame();}
     private void makeFrame(){
@@ -29,41 +17,26 @@ public class Welcome {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
-        FlowLayout f=new FlowLayout();
-        textField= new JTextField(20);
-
-        signIn= new JButton();
-        signUp= new JButton();
-        anon= new JButton();
-
+        JButton signIn = new JButton();
+        JButton signUp = new JButton();
+        JButton anon = new JButton();
 
         signIn.setText("Sign In");
         signIn.setActionCommand("Sign In");
-        signIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SecondWindow w= new SecondWindow();
-            }
+        signIn.addActionListener(actionEvent -> {
+            frame.dispose();
+            new Registration();
         });
 
         signUp.setText("Sign Up");
-        signUp.setActionCommand("Sign In");
-        signUp.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SecondWindow w= new SecondWindow();
-            }
-        });
+        signUp.setActionCommand("Sign Up");
+        signUp.addActionListener(actionEvent -> frame.dispose());
 
+        //If the player doesn't want to sign Up or sign In, they will immediately go to the second frame and begin the game.
         anon.setText("Anonymous");
-        anon.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SecondWindow w= new SecondWindow();
-            }
+        anon.addActionListener(actionEvent -> {
+            frame.dispose();
+            new SecondWindow();
         });
 
         //Center View
@@ -74,7 +47,7 @@ public class Welcome {
         frame.setLocation(x, y);
 
         //Set Image Icon
-        ImageIcon icon= new ImageIcon();
+        new ImageIcon();
         try {
             frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
         }
@@ -82,26 +55,16 @@ public class Welcome {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
-        panel=new JPanel(new BorderLayout());
-        panel.setBorder(new EmptyBorder(2,3,2,3));
-        sec = new JPanel(new GridBagLayout());
-        sec.setBorder(new EmptyBorder(5,5,5,5));
-        third = new JPanel(new GridLayout(1,3,20,20));
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.add(signIn);
+        panel.add(signUp);
+        panel.add(anon);
 
-        textField.setText("Hello");
+        panel.setLocation(20,20);
 
-        third.add(signUp);
-        third.add(signIn);
-        third.add(anon);
-
-
-        sec.add(third);
-        panel.add(sec,BorderLayout.PAGE_END);
-
-
-        frame.add(textField);
         frame.add(panel);
         frame.setVisible(true);
+
     }
 
 }
