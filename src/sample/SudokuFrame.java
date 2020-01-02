@@ -35,7 +35,7 @@ import java.io.IOException;
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
 
-            GameReader reader= new GameReader(9, "src/sample/sudoku/s1.txt");
+            GameReader reader= new GameReader(9);
             int[][] startingSudoku= reader.getUnsolvedSudoku();
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
@@ -44,6 +44,8 @@ import java.io.IOException;
                     f.add(Tf[i][j]);
                 }
             }
+
+
 
             JButton b = new JButton("Solve");
             f.add(b);
@@ -61,12 +63,13 @@ import java.io.IOException;
                         }
                     }
                 }
-
+                int[][] endingSudoku= reader.getSolvedSudoku();
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
-                        Tf[i][j].setText("" + suda[i][j]);
+                        Tf[i][j].setText(endingSudoku[i][j] +"");
                     }
                 }
+
             });
         }
         private void buildMenu() {

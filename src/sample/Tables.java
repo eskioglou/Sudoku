@@ -1,9 +1,8 @@
 package sample;
 
-import javax.swing.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.Scanner;
 
 
@@ -25,36 +24,6 @@ public class Tables {
     }
     public File getFile(){ return file;}
 
-    File selectFile(){
-        File file;
-        file= new File("jetbrains://idea/navigate/reference?project=sudoku-3237_3116v3&fqn=sample.sudoku");
-        file.mkdir();
-        File[] s= file.listFiles();
-        Random rand= new Random();
-        assert s!=null;
-        File file1= s[rand.nextInt(s.length)];
-        return file1;
-    }
-
-    void createMatrix(){
-        //File f= selectFile();
-        //JFileChooser file= new JFileChooser(f);
-        //file.getSelectedFile();
-
-        /*try{
-            Scanner sc = new Scanner(file1);
-            for(int i= 0; i<dimension; i++){
-                for(int j= 0; j<dimension; j++){
-                    matrix[i][j] = sc.nextInt();
-                }
-            }
-            sc.close();
-        }
-        catch(FileNotFoundException e){
-            e.printStackTrace();
-        }
-*/
-    }
     void displayMatrix(){
         for(int i=0;i<dimension;i++){
             for(int j=0;j<dimension;j++){

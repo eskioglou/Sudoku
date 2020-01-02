@@ -4,11 +4,16 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Interface {
-    int numi;
-    int numj;
-    int value;
-    Tables tab = new Tables(9);
-    Duidoku dui = new Duidoku();
+    private int numi;
+    private int numj;
+    private int value;
+    private Tables tab;
+    private Duidoku dui;
+
+    public Interface() {
+        tab = new Tables(9);
+        dui = new Duidoku();
+    }
 
     void start(){
         //sample.Welcome n=new sample.Welcome();
@@ -25,16 +30,13 @@ public class Interface {
             playDuidoku();
         }
     }
-    int chooseVersion(){
+    private int chooseVersion(){
         System.out.println("Choose a version");
         Scanner vers = new Scanner(System.in);
-        int ver = vers.nextInt();
-        return ver;
+        return vers.nextInt();
     }
-
-    void playSudoku(){
-        tab.createMatrix();
-        //tab.solutionMatrix();
+//----------------------Sudoku-----------------------------------
+    private void playSudoku(){
         do{
             tab.displayMatrix();
             getCoords(9);
@@ -46,7 +48,7 @@ public class Interface {
             }
         }while(!endSudokuGame());
     }
-    void checkAccept(){
+    private void checkAccept(){
         do {
             System.out.println("Give value");
             Scanner v = new Scanner(System.in);
@@ -60,15 +62,12 @@ public class Interface {
             System.out.println("check failed");
         }
     }
-    boolean isSudokuEmpty(int i, int j){
+    private boolean isSudokuEmpty(int i, int j){
         int cell = tab.getCell(i, j);
-        if(cell == 0){
-            return true;
-        }
-        return false;
+        return cell == 0;
     }
 
-    boolean endSudokuGame(){
+    private boolean endSudokuGame(){
         int zeros=0;
         for(int i = 0; i<9; i++){
             for(int j = 0; j<9; j++){
@@ -84,8 +83,8 @@ public class Interface {
         }
         return false;
     }
-
-    void playDuidoku(){
+//-----------------------------Duidoku------------------------------------------------
+    private void playDuidoku(){
         dui.createDuidoku();
         do{
             dui.displayMatrix();
@@ -105,7 +104,7 @@ public class Interface {
         }while(!endDuidokuGame());
 
     }
-    void getCoords(int dimension){
+    private void getCoords(int dimension){
         do {
             System.out.println("Give x coordinate");
             Scanner scanneri = new Scanner(System.in);
@@ -126,9 +125,9 @@ public class Interface {
         }while(value<1 || value>4);
         return value;
     }
-    boolean checkDuidokuAccept(int value){
+    private boolean checkDuidokuAccept(int value){
         if(!dui.existsColumn(numi, numj, value) && !dui.existsRow(numi, numj, value)&& !dui.existsGrid(numi, numj, value)){
-            boolean done = dui.setCell(numi, numj, value);
+            dui.setCell(numi, numj, value);
             System.out.println("value set");
             return true;
         }
@@ -137,7 +136,7 @@ public class Interface {
             return false;
         }
     }
-    public boolean movePC(boolean done){
+    private void movePC(boolean done){
         if (done){
             boolean acpt;
             do {
@@ -152,10 +151,10 @@ public class Interface {
                     makeInactive();
                 }
             }while(!acpt);
-        }return true;
+        }
     }
 
-    public void makeInactive(){
+    private void makeInactive(){
         for(int i = 0; i<4; i++){
             for(int j = 0; j<4; j++){
                 if(isDuidokuEmpty(i, j)){
@@ -165,7 +164,7 @@ public class Interface {
                             flag = false;
                         }
                     }
-                    if(flag == true){
+                    if(flag){
                         dui.setCell(i, j, 9);
                     }
                 }
@@ -173,14 +172,11 @@ public class Interface {
             }
         }
     }
-    boolean isDuidokuEmpty(int i, int j){
+    private boolean isDuidokuEmpty(int i, int j){
         int cell = dui.getCell(i, j);
-        if(cell == 0){
-            return true;
-        }
-        return false;
+        return cell == 0;
     }
-    boolean endDuidokuGame(){
+    private boolean endDuidokuGame(){
         int zeros=0;
         for(int i = 0; i<4; i++){
             for(int j = 0; j<4; j++){
@@ -195,5 +191,9 @@ public class Interface {
             return true;
         }
         return false;
+    }
+
+    public int cellValue(int i, int j){
+        return tab.getCell(i, j);
     }
 }

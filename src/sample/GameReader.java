@@ -2,6 +2,7 @@ package sample;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameReader {
@@ -9,10 +10,10 @@ public class GameReader {
     private int[][] unsolvedSudoku;
     private int[][] solvedSudoku;
 
-    public GameReader(int dimensions, String pathName){
+    public GameReader(int dimensions){
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
-        ReadFile(pathName);
+        ReadFile();
     }
 
     public int[][] getSolvedSudoku() {
@@ -23,11 +24,24 @@ public class GameReader {
         return unsolvedSudoku;
     }
 
-    private void ReadFile(String pathName){
+    File selectFile(){
+        File file;
+        file= new File("C:\\Users\\USER\\IdeaProjects\\sudoku-3237_311612\\src\\sample\\sudoku");
+        file.mkdir();
+        File[] s= file.listFiles();
+        Random rand= new Random();
+        assert s!=null;
+        File file1= s[rand.nextInt(s.length -1)];
+        return file1;
+    }
+
+
+    private void ReadFile(){
         Scanner fileScanner = null;
         ArrayList<Integer> numbers = new ArrayList<>();
         try {
-            fileScanner = new Scanner(new File("src/sample/sudoku/s1.txt"));
+            File file = selectFile();
+            fileScanner = new Scanner(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
