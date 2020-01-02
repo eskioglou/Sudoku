@@ -64,7 +64,5 @@ public class Welcome {
 
         frame.add(panel);
         frame.setVisible(true);
-
     }
-
 }
