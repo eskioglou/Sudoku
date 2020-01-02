@@ -38,7 +38,6 @@ public class Interface {
 //----------------------Sudoku-----------------------------------
     private void playSudoku(){
         do{
-            tab.displayMatrix();
             getCoords(9);
             if(isSudokuEmpty(numi, numj)){
                 checkAccept();
@@ -87,13 +86,11 @@ public class Interface {
     private void playDuidoku(){
         dui.createDuidoku();
         do{
-            dui.displayMatrix();
             getCoords(4);
             if(isDuidokuEmpty(numi, numj)){
                 boolean acpt = checkDuidokuAccept( getValue());
                 if(acpt){
                     makeInactive();
-                    dui.displayMatrix();
                     movePC(acpt);
                 }
             }

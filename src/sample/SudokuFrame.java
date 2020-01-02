@@ -11,6 +11,7 @@ import java.io.IOException;
     public class SudokuFrame extends JPanel {
         private JFrame f;
 
+
         SudokuFrame(int dimension) {
             f = new JFrame("Sudoku Game");
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
@@ -44,25 +45,41 @@ import java.io.IOException;
                     f.add(Tf[i][j]);
                 }
             }
+            for(int i = 1; i<= dimension; i++){
+                for(int j = 1; j<=dimension; j++){
+                    int k = i;
+                    int l = j;
+                    Tf[i][j].addActionListener(e -> {
+                        Check check = new Check(Tf, dimension);
+                        String mes = e.getActionCommand();
+                        int value = Integer.parseInt(mes);
+                        if (value<=0 || value >9){
+                            String str = "0";
+                            Tf[k][l].setText(str);
+                            JOptionPane.showMessageDialog(null,
+                                    "Error: Please enter number from 1 to 9", "Error Message",
+                                    JOptionPane.ERROR_MESSAGE);
+                        }else{
 
+                            boolean flag = check.accept(k, l, value);
+                            if(flag){
+                                String str = "" + value;
+                                Tf[k][l].setText(str);
+                                JOptionPane.showMessageDialog(null, "Value set");
+                            }else{
+                                String str = "0";
+                                Tf[k][l].setText(str);
+                                JOptionPane.showMessageDialog(null, "Value could not be set");
+                            }
 
+                        }
+                    });
+                }
+            }
 
             JButton b = new JButton("Solve");
             f.add(b);
             b.addActionListener(e -> {
-                int[][] sudb = new int[dimension+1][dimension+1];
-                int[][] suda = new int[dimension+1][dimension+1];
-                for (int i = 1; i <= dimension; i++) {
-                    for (int j = 1; j <= dimension; j++) {
-                        try {
-                            if (Tf[i][j].getText().equals("")) sudb[i][j] = 0;
-                            else {
-                                sudb[i][j] = Integer.parseInt(Tf[i][j].getText());
-                            }
-                        } catch (Exception ee) {//System.out.println("error"+ee);
-                        }
-                    }
-                }
                 int[][] endingSudoku= reader.getSolvedSudoku();
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
@@ -71,6 +88,8 @@ import java.io.IOException;
                 }
 
             });
+
+
         }
         private void buildMenu() {
             JMenuBar bar = new JMenuBar();
