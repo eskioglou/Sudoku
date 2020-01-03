@@ -1,6 +1,9 @@
 package sample;
 
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -79,6 +82,15 @@ class Main {
         else if (number == 3) {
             System.out.println("You are logged in as Anonymous.");
             new SecondWindow();
+            try {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(Main.class.getResource("Chopin - Spring Waltz.wav"));
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.start();
+            } catch(Exception ex) {
+                System.out.println("Error with playing sound.");
+                ex.printStackTrace();
+            }
         }
     }
 }
