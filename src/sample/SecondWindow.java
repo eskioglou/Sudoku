@@ -1,19 +1,13 @@
 package sample;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
 public class SecondWindow {
     private JFrame frame= new JFrame();
-    private JPanel panel;
-    private JButton sudokubutton= new JButton();
-    private JButton killerbutton= new JButton();
-    private JButton duidokubutton= new JButton();
     private JLabel label= new JLabel();
 
 
@@ -26,38 +20,28 @@ public class SecondWindow {
         frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        sudokubutton = new JButton();
+        JButton sudokubutton = new JButton();
         sudokubutton.setText("Sudoku");
         sudokubutton.setActionCommand("Like");
-        sudokubutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-            frame.dispose();
-            SudokuFrame f= new SudokuFrame(9);
-        }
+        sudokubutton.addActionListener(actionEvent -> {
+        frame.dispose();
+            new SudokuFrame(9);
+    });
 
-        });
-
-        killerbutton = new JButton();
+        JButton killerbutton = new JButton();
         killerbutton.setText("Killer Sudoku");
         killerbutton.setActionCommand("Like");
-        killerbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SudokuFrame f= new SudokuFrame(9);
-            }
+        killerbutton.addActionListener(actionEvent -> {
+            frame.dispose();
+            new SudokuFrame(9);
         });
 
-        duidokubutton = new JButton();
+        JButton duidokubutton = new JButton();
         duidokubutton.setText("Duidoku");
         duidokubutton.setActionCommand("Like");
-        duidokubutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SudokuFrame f=new SudokuFrame(4);
-            }
+        duidokubutton.addActionListener(actionEvent -> {
+            frame.dispose();
+            new SudokuFrame(4);
         });
         //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
@@ -67,7 +51,7 @@ public class SecondWindow {
         frame.setLocation(x, y);
 
         //Set Image Icon
-        ImageIcon icon= new ImageIcon();
+        new ImageIcon();
         try {
             frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
         }
@@ -77,7 +61,7 @@ public class SecondWindow {
 
 
         label.setText("Choose a version: ");
-        panel=new JPanel();
+        JPanel panel = new JPanel();
         panel.add(label);
         panel.add(sudokubutton);
         panel.add(killerbutton);

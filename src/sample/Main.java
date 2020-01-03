@@ -1,16 +1,18 @@
 package sample;
 
 
-import java.io.*;
-import java.util.Formatter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) throws IOException {
 
-        Scanner s1, s2;
-        //int number = 0;
-        System.out.println("-----|Welcome|-----");
+        System.out.println("╔═══════════════════════╗" );
+        System.out.println("      W E L C O M E     ");
+        System.out.println("╚═══════════════════════╝");
         System.out.println("Registration: Press 1");
         System.out.println("Login: Press 2");
         System.out.println("Anonymous: Press 3");
@@ -23,7 +25,7 @@ class Main {
             System.out.println("Registration Page");
             PrintWriter pw = new PrintWriter(new FileWriter("login.txt", true));
             Scanner scanner = new Scanner(System.in);
-            String text = "";
+            String text;
             System.out.println("Username: ");
             text = scanner.next();
             pw.write(text + ",");
@@ -46,15 +48,15 @@ class Main {
             Scanner scanner3= new Scanner(System.in);
             String m= scanner3.next();
 
-                boolean found= false;
-                String tempUsername= "";
-                String tempPassword= "";
+
+            String tempUsername;
+                String tempPassword;
 
                 try{
                     x= new Scanner(new File("login.txt"));
                     x.useDelimiter("[,\n]");
 
-                    if (x.hasNext() && !found){
+                    if (x.hasNext()){
                         tempUsername=x.next();
                         tempPassword=x.next();
 
