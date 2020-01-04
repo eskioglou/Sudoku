@@ -46,7 +46,7 @@ public class DuidokuFrame extends JPanel {
                 int k = i;
                 int l = j;
                 Tf[i][j].addActionListener(e -> {
-                    Check check = new Check(Tf, dimension);
+                    CheckDui check = new CheckDui(Tf, dimension);
                     String mes = e.getActionCommand();
                     int value = Integer.parseInt(mes);
                     if (value<=0 || value >4){
@@ -56,18 +56,51 @@ public class DuidokuFrame extends JPanel {
                                 "Error: Please enter number from 1 to 4", "Error Message",
                                 JOptionPane.ERROR_MESSAGE);
                     }else{
+                        boolean end = false;
                         boolean flag = check.accept(k, l, value);
                         if(flag){
                             String str = "" + value;
                             Tf[k][l].setText(str);
+
+                            for(int a = 0; a<4; a++){
+                                for(int b = 0; b<4; b++){
+                                    boolean f = check.makeInactive(a, b);
+                                    if(f){
+                                        int i2 = check.getNumi()+1;
+                                        int j2 = check.getNumj()+1;
+                                        Tf[i2][j2].setText("9");
+
+                                    }
+                                }
+                            }
                             JOptionPane.showMessageDialog(null, "Value set");
+                            check.movePC();
+                            int num = check.getVal();
+                            String v = "" +num;
+                            int i1 = check.getNumi()+1;
+                            int j1 = check.getNumj()+1;
+                            Tf[i1][j1].setText(v);
+
+                            for(int a = 0; a<4; a++){
+                                for(int b = 0; b<4; b++){
+                                    boolean f = check.makeInactive(a, b);
+                                    if(f){
+                                        int i3 = check.getNumi()+1;
+                                        int j3 = check.getNumj()+1;
+                                        Tf[i3][j3].setText("9");
+
+                                    }
+                                }
+                            }
+                            JOptionPane.showMessageDialog(null, "Your turn");
                         }else{
                             String str = "0";
                             Tf[k][l].setText(str);
                             JOptionPane.showMessageDialog(null, "Value could not be set");
-                        }
+                    }
 
                     }
+
                 });
             }
         }
