@@ -26,12 +26,13 @@ public class GameReader {
 
     File selectFile(){
         File file;
-        file= new File("C:\\Users\\USER\\IdeaProjects\\sudoku-3237_311612\\src\\sample\\sudoku");
+        file= new File("C:\\Users\\Anastasia Kara\\Desktop\\sudoku-3237_3116v12\\sudoku");
         file.mkdir();
         File[] s= file.listFiles();
         Random rand= new Random();
         assert s!=null;
-        File file1= s[rand.nextInt(s.length -1)];
+        File file1;
+        file1 = s[rand.nextInt(s.length -1)];
         return file1;
     }
 
