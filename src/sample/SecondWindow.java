@@ -56,7 +56,7 @@ public class SecondWindow {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 frame.dispose();
-                DuidokuFrame f=new DuidokuFrame(4);
+                SudokuFrame f=new SudokuFrame(4);
             }
         });
         //Center View
