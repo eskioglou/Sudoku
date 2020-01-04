@@ -39,6 +39,7 @@ class Main {
             pw.close();
             System.out.println("Registration Successful");
             new SecondWindow();
+
         }
 
         //Login
