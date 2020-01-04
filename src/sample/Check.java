@@ -40,7 +40,6 @@ public class Check {
         for (int row = 0; row < dimension; row++) {
             if(row!=numi) {
                 if (value == play[row][numj]) {
-                    System.out.println("1");
                     return true;
                 }
             }
@@ -51,7 +50,6 @@ public class Check {
         for (int col = 0; col < dimension; col++) {
             if (col != numj) {
                 if (play[numi][col] == value) {
-                    System.out.println("2");
                     return true;
                 }
             }
@@ -65,48 +63,51 @@ public class Check {
         boolean flag = false;
         if(w==0){
             for(int i=numi; i<=numi+Math.sqrt(dimension)-1; i++){
-                flag = insideLoop(i, numj, value, flag);
+                flag = insideLoop(i, numi, numj, value, flag);
             }
         }
         else if(w==1){
             for(int i=numi-1; i<=numi+Math.sqrt(dimension)-2; i++){
-                flag = insideLoop(i, numj, value, flag);
+                flag = insideLoop(i, numi, numj, value, flag);
             }
         }
         else{
             for(int i=numi-2; i<=numi; i++){
-                flag = insideLoop(i, numj, value, flag);
+                flag = insideLoop(i, numi, numj, value, flag);
             }
         }
         return flag;
     }
 
-    boolean insideLoop(int i, int numj, int value, boolean flag){
+    boolean insideLoop(int i, int numi, int numj, int value, boolean flag){
         int z = (int) (numj% Math.sqrt(dimension));
         if(z==0){
             for(int j=numj; j<=numj+Math.sqrt(dimension)-1; j++){
                 // System.out.println(" x and y " + i + j);
-                if(value==play[i][j]){
-                    System.out.println("3");
-                    flag = true;
+                if(i!=numi || j!=numj){
+                    if(value==play[i][j]){
+                        flag = true;
+                    }
                 }
             }
         }
         else if(z==1){
             for(int j=numj-1; j<=numj+Math.sqrt(dimension)-2; j++){
                 // System.out.println(" x and y " + i + j);
-                if(value==play[i][j]){
-                    System.out.println("4");
-                    flag = true;
+                if(i!=numi || j!=numj){
+                    if(value==play[i][j]){
+                        flag = true;
+                    }
                 }
             }
         }
         else{
             for(int j=numj-2; j<=numj; j++){
                 //System.out.println(" x and y " + i + j);
-                if(value==play[i][j]){
-                    System.out.println("5");
-                    flag = true;
+                if(i!=numi || j!=numj){
+                    if(value==play[i][j]){
+                        flag = true;
+                    }
                 }
             }
         }
