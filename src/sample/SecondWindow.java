@@ -52,12 +52,9 @@ public class SecondWindow {
         duidokubutton = new JButton();
         duidokubutton.setText("Duidoku");
         duidokubutton.setActionCommand("Like");
-        duidokubutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-                SudokuFrame f=new SudokuFrame(4);
-            }
+        duidokubutton.addActionListener(actionEvent -> {
+            frame.dispose();
+            DuidokuFrame f=new DuidokuFrame(4);
         });
         //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
