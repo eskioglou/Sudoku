@@ -8,11 +8,11 @@ public class Interface {
     private int numj;
     private int value;
     private Tables tab;
-    private Duidoku dui;
+
 
     public Interface() {
         tab = new Tables(9);
-        dui = new Duidoku();
+
     }
 
     void start(){
@@ -84,7 +84,7 @@ public class Interface {
     }
 //-----------------------------Duidoku------------------------------------------------
     private void playDuidoku(){
-        dui.createDuidoku();
+
         do{
             getCoords(4);
             if(isDuidokuEmpty(numi, numj)){
@@ -123,8 +123,8 @@ public class Interface {
         return value;
     }
     private boolean checkDuidokuAccept(int value){
-        if(!dui.existsColumn(numi, numj, value) && !dui.existsRow(numi, numj, value)&& !dui.existsGrid(numi, numj, value)){
-            dui.setCell(numi, numj, value);
+        if(!tab.existsColumn(numi, numj, value) && !tab.existsRow(numi, numj, value)&& !tab.existsGrid(numi, numj, value)){
+            tab.setCell(numi, numj, value);
             System.out.println("value set");
             return true;
         }
@@ -141,7 +141,7 @@ public class Interface {
                 do {
                     numi = ran.nextInt(4);
                     numj = ran.nextInt(4);
-                }while (dui.getCell(numi, numj) != 0);
+                }while (tab.getCell(numi, numj) != 0);
                 int v = 1 + ran.nextInt(4);
                 acpt = checkDuidokuAccept(v);
                 if(acpt){
@@ -157,12 +157,12 @@ public class Interface {
                 if(isDuidokuEmpty(i, j)){
                     boolean flag = true;
                     for(int num = 1; num<=4; num++){
-                        if(!dui.existsColumn(i, j, num) && !dui.existsRow(i, j, num) && !dui.existsGrid(i, j, num)){
+                        if(!tab.existsColumn(i, j, num) && !tab.existsRow(i, j, num) && !tab.existsGrid(i, j, num)){
                             flag = false;
                         }
                     }
                     if(flag){
-                        dui.setCell(i, j, 9);
+                        tab.setCell(i, j, 9);
                     }
                 }
 
@@ -170,14 +170,14 @@ public class Interface {
         }
     }
     private boolean isDuidokuEmpty(int i, int j){
-        int cell = dui.getCell(i, j);
+        int cell = tab.getCell(i, j);
         return cell == 0;
     }
     private boolean endDuidokuGame(){
         int zeros=0;
         for(int i = 0; i<4; i++){
             for(int j = 0; j<4; j++){
-                int cell = dui.getCell(i, j);
+                int cell = tab.getCell(i, j);
                 if(cell == 0){
                     zeros++;
                 }

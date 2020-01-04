@@ -17,7 +17,7 @@ import java.io.IOException;
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
             f.setLayout(new GridLayout(dimension+1, dimension));
             f.setSize(600, 500);
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setVisible(true);
             buildMenu();
 
