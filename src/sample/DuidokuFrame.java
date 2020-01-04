@@ -92,7 +92,7 @@ public class DuidokuFrame extends JPanel {
                                     }
                                 }
                             }
-                            JOptionPane.showMessageDialog(null, "Your turn");
+                            JOptionPane.showMessageDialog(null, "Your turn to play");
                         }else{
                             String str = "0";
                             Tf[k][l].setText(str);
