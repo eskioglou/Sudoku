@@ -56,7 +56,6 @@ public class DuidokuFrame extends JPanel {
                                 "Error: Please enter number from 1 to 4", "Error Message",
                                 JOptionPane.ERROR_MESSAGE);
                     }else{
-
                         boolean flag = check.accept(k, l, value);
                         if(flag){
                             String str = "" + value;

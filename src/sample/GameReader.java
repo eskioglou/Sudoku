@@ -26,7 +26,7 @@ public class GameReader {
 
     File selectFile(){
         File file;
-        file= new File("C:\\Users\\Anastasia Kara\\Desktop\\sudoku-3237_3116v12\\sudoku");
+        file= new File("C:\\Users\\USER\\IdeaProjects\\sudoku-3237_311612\\src\\sample\\sudoku");
         file.mkdir();
         File[] s= file.listFiles();
         Random rand= new Random();
