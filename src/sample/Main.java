@@ -43,54 +43,23 @@ class Main {
 
         //Login
         if (number == 2) {
-            Scanner x;
-            System.out.println("Username: ");
             Scanner scanner2= new Scanner(System.in);
-            String n= scanner2.next();
+            String filepath="login.txt";
+            String username;
+            String password;
+            System.out.println("Login");
+            System.out.println("Username: ");
+            username= scanner2.next();
             System.out.println("Password: ");
-            Scanner scanner3= new Scanner(System.in);
-            String m= scanner3.next();
+            password= scanner2.next();
+            new Login(username,password,filepath);
 
-
-            String tempUsername;
-                String tempPassword;
-
-                try{
-                    x= new Scanner(new File("login.txt"));
-                    x.useDelimiter("[,\n]");
-
-                    if (x.hasNext()){
-                        tempUsername=x.next();
-                        tempPassword=x.next();
-
-                        if(tempUsername.trim().equals(n.trim()) && tempPassword.trim().equals(m.trim())){
-                            System.out.println("You are logged in.");
-                            new SecondWindow();
-                        }
-                        else {
-                            System.out.println("Invalid user or Wrong Password");
-                        }
-                    }
-                    x.close();
-                }
-                catch (Exception e){
-                    System.out.println("Invalid User or Wrong Password.");
-                }
-            }
+        }
 
 
         else if (number == 3) {
             System.out.println("You are logged in as Anonymous.");
             new SecondWindow();
-            try {
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(Main.class.getResource("Chopin - Spring Waltz.wav"));
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioIn);
-                clip.start();
-            } catch(Exception ex) {
-                System.out.println("Error with playing sound.");
-                ex.printStackTrace();
-            }
         }
     }
 }
