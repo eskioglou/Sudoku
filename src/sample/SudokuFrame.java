@@ -5,20 +5,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Scanner;
 
 public class SudokuFrame extends JPanel {
         private JFrame f;
 
 
-        public SudokuFrame(int dimension) {
+    public SudokuFrame(int dimension) {
             f = new JFrame("Sudoku Game");
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
             f.setLayout(new GridLayout(dimension+1, dimension));
             f.setSize(700, 600);
             f.setResizable(false);
-            f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setVisible(true);
             buildMenu();
 
@@ -92,10 +92,49 @@ public class SudokuFrame extends JPanel {
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
                         Tf[i][j].setText(endingSudoku[i][j] +"");
-
                     }
                 }
+            });
 
+            JButton save= new JButton("Save");
+            f.add(save);
+            save.addActionListener(e -> {
+
+                FileWriter fileWriter = null;
+                try {
+
+                    System.out.println();
+                    Scanner x1=new Scanner(System.in);
+                    String username=x1.next();
+                    String filename= username+".txt";
+                    fileWriter = new FileWriter(filename,false);
+                    PrintWriter printWriter = new PrintWriter(fileWriter);
+
+                    String n ;
+                    for (int i = 1; i <= dimension; i++) {
+                        for (int j = 1; j <= dimension; j++) {
+                            n=Tf[i][j].getText();
+                            printWriter.print(n+" ");
+                        }
+                        printWriter.println();
+                    }
+                    printWriter.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            });
+
+            JButton hint= new JButton("Hint");
+            f.add(hint);
+            hint.addActionListener(e -> {
+
+                for (int i = 1; i <= dimension; i++) {
+                    for (int j = 1; j <= dimension; j++) {
+                       if(Tf[i][j].getText() == "0"){
+                       }
+                    }
+                }
             });
 
 
@@ -104,6 +143,7 @@ public class SudokuFrame extends JPanel {
             JMenuBar bar = new JMenuBar();
             JMenu fileMenu = new JMenu("Menu");
             JMenuItem newgame = new JMenuItem("New Game");
+            JMenuItem loadgame= new JMenuItem("Load Game");
             JMenuItem hint = new JMenuItem("Hint");
             JMenuItem statistics= new JMenuItem("Statistics");
             JMenuItem returnb = new JMenuItem("Return");
@@ -113,6 +153,13 @@ public class SudokuFrame extends JPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     f.dispose();
                     new SudokuFrame(9);
+                }
+            });
+            loadgame.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent actionEvent) {
+                    f.dispose();
+                    new SudokuFrame1(9);
                 }
             });
             hint.addActionListener(new ActionListener() {
@@ -138,6 +185,7 @@ public class SudokuFrame extends JPanel {
 
             fileMenu.setText("Menu");
             fileMenu.add(newgame);
+            fileMenu.add(loadgame);
             fileMenu.add(hint);
             fileMenu.addSeparator();
             fileMenu.add(statistics);

@@ -26,17 +26,18 @@ class Main {
         //Registration
         if (number == 1) {
             System.out.println("Registration Page");
-            PrintWriter pw = new PrintWriter(new FileWriter("login.txt", true));
+
+            PrintWriter login= new PrintWriter(new FileWriter("login.txt",true));
             Scanner scanner = new Scanner(System.in);
             String text;
             System.out.println("Username: ");
             text = scanner.next();
-            pw.write(text + ",");
+            login.write(text+",");
             System.out.println("Password: ");
             text = scanner.next();
-            pw.write(text);
-            pw.println();
-            pw.close();
+            login.write(text);
+            login.println();
+            login.close();
             System.out.println("Registration Successful");
             new SecondWindow();
 
@@ -56,7 +57,6 @@ class Main {
             new Login(username,password,filepath);
 
         }
-
 
         else if (number == 3) {
             System.out.println("You are logged in as Anonymous.");

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameReader {
+public class LoadGame {
 
     private int[][] unsolvedSudoku;
     private int[][] solvedSudoku;
 
-    public GameReader(int dimensions){
+    public LoadGame (int dimensions){
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
 
@@ -26,15 +26,12 @@ public class GameReader {
     }
 
     File selectFile(){
-        File file;
-        file= new File("C:\\Users\\Anastasia Kara\\Desktop\\sudoku-3237_3116v12\\src\\sample\\sudoku");
-        file.mkdir();
-        File[] s= file.listFiles();
-        Random rand= new Random();
-        assert s!=null;
-        File file1;
-        file1 = s[rand.nextInt(s.length -1)];
-        return file1;
+        System.out.println("Please confirm your username: ");
+        Scanner x= new Scanner(System.in);
+        String username=x.next();
+        String pathname= username+".txt";
+        File file= new File(pathname);
+        return file;
     }
 
     private void ReadFile(){
@@ -62,12 +59,5 @@ public class GameReader {
                 k++;
             }
         }
-        for(int i=1; i<solvedSudoku.length; i++){
-            for(int j=1; j<solvedSudoku.length; j++) {
-                solvedSudoku[i][j] = numbers.get(k);
-                k++;
-            }
-        }
     }
-
 }
