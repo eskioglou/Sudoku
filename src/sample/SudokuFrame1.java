@@ -159,7 +159,7 @@ public class SudokuFrame1 extends JPanel {
         loadgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                new SudokuFrame1(9);
             }
         });
         hint.addActionListener(new ActionListener() {
