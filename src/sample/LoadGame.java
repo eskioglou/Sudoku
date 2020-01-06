@@ -9,13 +9,12 @@ public class LoadGame {
 
     private int[][] unsolvedSudoku;
     private int[][] solvedSudoku;
-
     public LoadGame (int dimensions){
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
-
         ReadFile();
     }
+
 
     public int[][] getSolvedSudoku() {
         return solvedSudoku;
@@ -59,5 +58,13 @@ public class LoadGame {
                 k++;
             }
         }
+        int l=0;
+        for(int i=1; i<solvedSudoku.length; i++){
+            for(int j=1; j<solvedSudoku.length; j++) {
+                solvedSudoku[i][j] = numbers.get(l);
+                l++;
+            }
+        }
+
     }
 }

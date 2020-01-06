@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class SudokuFrame extends JPanel {
         private JFrame f;
 
@@ -60,7 +62,7 @@ public class SudokuFrame extends JPanel {
                     Tf[i][j].addActionListener(e -> {
                         Check check = new Check(Tf, dimension);
                         String mes = e.getActionCommand();
-                        int value = Integer.parseInt(mes);
+                        int value = parseInt(mes);
                         if (value<=0 || value >9){
                             String str = "0";
                             Tf[k][l].setText(str);
@@ -88,19 +90,41 @@ public class SudokuFrame extends JPanel {
             JButton b= new JButton("Solve");
             f.add(b);
             b.addActionListener(e -> {
+                String savedVersion = null;
+                String matrix;
                 int[][] endingSudoku= reader.getSolvedSudoku();
+
                 for (int i = 1; i <= dimension; i++) {
-                    for (int j = 1; j <= dimension; j++) {
-                        Tf[i][j].setText(endingSudoku[i][j] +"");
+                       for (int j = 1; j <= dimension; j++) {
+                           matrix= Tf[i][j].getText()+ " ";
+                           System.out.print(matrix);
+
+                           System.out.print( endingSudoku[i][j] +" ");
+                           if(matrix ==endingSudoku[i][j]+" "){
+                               Tf[i][j].setBackground(Color.CYAN);
+                           }
+                       }
+                       System.out.println();
                     }
-                }
+                    System.out.println();
+
+
+               /* for(int i=1;i<10;i++){
+                    for(int j=1;j<10;j++) {
+                        if(array!=endingSudoku){
+                            Tf[i][j].setBackground(Color.CYAN);
+                        }
+                    }
+                }*/
+
+
             });
 
             JButton save= new JButton("Save");
             f.add(save);
             save.addActionListener(e -> {
 
-                FileWriter fileWriter = null;
+                FileWriter fileWriter;
                 try {
 
                     System.out.println();
@@ -128,11 +152,44 @@ public class SudokuFrame extends JPanel {
             JButton hint= new JButton("Hint");
             f.add(hint);
             hint.addActionListener(e -> {
-
+            Check check= new Check(Tf,9);
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
-                       if(Tf[i][j].getText() == "0"){
-                       }
+                        if (startingSudoku[i][j]==0) {
+                            System.out.println("Please give me the row: ");
+                            Scanner scanner= new Scanner(System.in);
+                            int k=scanner.nextInt();
+                            System.out.println("Please give me the column: ");
+                            int l=scanner.nextInt();
+                            if (check.accept(k, l, 1)) {
+                                System.out.println( 1 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 2)) {
+                                System.out.println(2 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 3)) {
+                                System.out.println(3 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 4)) {
+                                System.out.println( 4 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 5)) {
+                                System.out.println(5 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 6)) {
+                                System.out.println( 6 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 7)) {
+                                System.out.println( 7 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 8)) {
+                                System.out.println(8 + " is acceptable");
+                            }
+                            if (check.accept(k, l, 9)) {
+                                System.out.println( 9 + " is acceptable");
+                            }
+                            return;
+                        }
                     }
                 }
             });
@@ -182,7 +239,6 @@ public class SudokuFrame extends JPanel {
                 }
             });
 
-
             fileMenu.setText("Menu");
             fileMenu.add(newgame);
             fileMenu.add(loadgame);
@@ -191,12 +247,8 @@ public class SudokuFrame extends JPanel {
             fileMenu.add(statistics);
             fileMenu.add(returnb);
 
-
             bar.add(fileMenu);
 
-
-
             f.setJMenuBar(bar);
-
         }
     }
