@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class DuidokuFrame extends JPanel {
+public class DuidokuFrame1 extends JPanel {
     private JFrame f;
 
 
-    DuidokuFrame(int dimension) {
+    DuidokuFrame1(int dimension) {
         f = new JFrame("Duidoku Game");
         JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
         f.setLayout(new GridLayout(dimension+1, dimension));
@@ -38,12 +38,14 @@ public class DuidokuFrame extends JPanel {
         } catch (IOException ex) {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
-
+        LoadGame load= new LoadGame(4);
+        int[][] startingSudoku= load.getUnsolvedSudoku();
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
                 Tf[i][j] = new JTextField();
-                Tf[i][j].setText("0");
+                Tf[i][j].setText(startingSudoku[i][j] +"");
                 f.add(Tf[i][j]);
+
             }
         }
         for(int i = 1; i<= dimension; i++){
@@ -102,7 +104,7 @@ public class DuidokuFrame extends JPanel {
                             String str = "0";
                             Tf[k][l].setText(str);
                             JOptionPane.showMessageDialog(null, "Value could not be set");
-                    }
+                        }
 
                     }
 
@@ -112,7 +114,7 @@ public class DuidokuFrame extends JPanel {
         JButton b= new JButton("Solve");
         f.add(b);
         b.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null,"You can't solve Duidoku. \n Please check Hint for help.");
+            JOptionPane.showMessageDialog(null,"You can't solve Duidoku.");
         });
 
         JButton save= new JButton("Save");
@@ -147,33 +149,33 @@ public class DuidokuFrame extends JPanel {
         JButton hint= new JButton("Hint");
         f.add(hint);
         hint.addActionListener(e -> {
-            CheckDui check= new CheckDui(Tf,4);
+            Check check= new Check(Tf,9);
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
-                        System.out.println("╔═══════════════════════╗" );
-                        System.out.println("        H I N T S        ");
-                        System.out.println("╚═══════════════════════╝");
-                        System.out.println("{You have to give in the number of the row and column and you will get all the available values.}");
-                        System.out.println("Please give me the row: ");
-                        Scanner scanner= new Scanner(System.in);
-                        int k=scanner.nextInt();
-                        System.out.println("Please give me the column: ");
-                        int l=scanner.nextInt();
-                        if (check.accept(k, l, 1)) {
-                            System.out.println( 1 + " is acceptable");
-                        }
-                        if (check.accept(k, l, 2)) {
-                            System.out.println(2 + " is acceptable");
-                        }
-                        if (check.accept(k, l, 3)) {
-                            System.out.println(3 + " is acceptable");
-                        }
-                        if (check.accept(k, l, 4)) {
-                            System.out.println( 4 + " is acceptable");
-                        }
-                        return;
+                    System.out.println("╔═══════════════════════╗" );
+                    System.out.println("        H I N T S        ");
+                    System.out.println("╚═══════════════════════╝");
+                    System.out.println("{You have to give in the number of the row and column and you will get all the available values.}");
+                    System.out.println("Please give me the row: ");
+                    Scanner scanner= new Scanner(System.in);
+                    int k=scanner.nextInt();
+                    System.out.println("Please give me the column: ");
+                    int l=scanner.nextInt();
+                    if (check.accept(k, l, 1)) {
+                        System.out.println( 1 + " is acceptable");
                     }
+                    if (check.accept(k, l, 2)) {
+                        System.out.println(2 + " is acceptable");
+                    }
+                    if (check.accept(k, l, 3)) {
+                        System.out.println(3 + " is acceptable");
+                    }
+                    if (check.accept(k, l, 4)) {
+                        System.out.println( 4 + " is acceptable");
+                    }
+                    return;
                 }
+            }
         });
 
 

@@ -2,6 +2,7 @@ package sample;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,9 +51,7 @@ public class SudokuFrame extends JPanel {
                         Tf[i][j].setFont(new Font("Tahoma", Font.BOLD, 14));
                         Tf[i][j].setEditable(false);
                     }
-
                     f.add(Tf[i][j]);
-
                 }
             }
             for(int i = 1; i<= dimension; i++){
@@ -70,7 +69,6 @@ public class SudokuFrame extends JPanel {
                                     "Error: Please enter number from 1 to 9", "Error Message",
                                     JOptionPane.ERROR_MESSAGE);
                         }else{
-
                             boolean flag = check.accept(k, l, value);
                             if(flag){
                                 String str = "" + value;
@@ -81,7 +79,6 @@ public class SudokuFrame extends JPanel {
                                 Tf[k][l].setText(str);
                                 JOptionPane.showMessageDialog(null, "Value could not be set");
                             }
-
                         }
                     });
                 }
@@ -90,34 +87,21 @@ public class SudokuFrame extends JPanel {
             JButton b= new JButton("Solve");
             f.add(b);
             b.addActionListener(e -> {
-                String savedVersion = null;
-                String matrix;
-                int[][] endingSudoku= reader.getSolvedSudoku();
-
-                for (int i = 1; i <= dimension; i++) {
-                       for (int j = 1; j <= dimension; j++) {
-                           matrix= Tf[i][j].getText()+ " ";
-                           System.out.print(matrix);
-
-                           System.out.print( endingSudoku[i][j] +" ");
-                           if(matrix ==endingSudoku[i][j]+" "){
-                               Tf[i][j].setBackground(Color.CYAN);
-                           }
-                       }
-                       System.out.println();
-                    }
-                    System.out.println();
-
-
-               /* for(int i=1;i<10;i++){
-                    for(int j=1;j<10;j++) {
-                        if(array!=endingSudoku){
-                            Tf[i][j].setBackground(Color.CYAN);
+                int[][] endingSudoku = reader.getSolvedSudoku();
+                int[][] startingSudoku1= reader.getUnsolvedSudoku();
+                    for (int i = 1; i <= dimension; i++) {
+                        for (int j = 1; j <= dimension; j++) {
+                            String n= Tf[i][j].getText();
+                            int result = Integer.parseInt(n);
+                            if(endingSudoku[i][j]==result && result!=startingSudoku1[i][j] ){
+                                Tf[i][j].setBackground(Color.GREEN);
+                            }
+                            else if(endingSudoku[i][j]!=result && result!=startingSudoku1[i][j]){
+                                Tf[i][j].setBackground(Color.RED);
+                            }
+                            Tf[i][j].setText(endingSudoku[i][j] +"");
                         }
                     }
-                }*/
-
-
             });
 
             JButton save= new JButton("Save");
@@ -127,7 +111,7 @@ public class SudokuFrame extends JPanel {
                 FileWriter fileWriter;
                 try {
 
-                    System.out.println();
+                    System.out.println("Please confirm your username: ");
                     Scanner x1=new Scanner(System.in);
                     String username=x1.next();
                     String filename= username+".txt";
@@ -156,6 +140,10 @@ public class SudokuFrame extends JPanel {
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
                         if (startingSudoku[i][j]==0) {
+                            System.out.println("╔═══════════════════════╗" );
+                            System.out.println("        H I N T S        ");
+                            System.out.println("╚═══════════════════════╝");
+                            System.out.println("{You have to give in the number of the row and column and you will get all the available values.}");
                             System.out.println("Please give me the row: ");
                             Scanner scanner= new Scanner(System.in);
                             int k=scanner.nextInt();
@@ -201,7 +189,6 @@ public class SudokuFrame extends JPanel {
             JMenu fileMenu = new JMenu("Menu");
             JMenuItem newgame = new JMenuItem("New Game");
             JMenuItem loadgame= new JMenuItem("Load Game");
-            JMenuItem hint = new JMenuItem("Hint");
             JMenuItem statistics= new JMenuItem("Statistics");
             JMenuItem returnb = new JMenuItem("Return");
 
@@ -217,12 +204,6 @@ public class SudokuFrame extends JPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     f.dispose();
                     new SudokuFrame1(9);
-                }
-            });
-            hint.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    f.dispose();
                 }
             });
             statistics.addActionListener(new ActionListener() {
@@ -242,7 +223,6 @@ public class SudokuFrame extends JPanel {
             fileMenu.setText("Menu");
             fileMenu.add(newgame);
             fileMenu.add(loadgame);
-            fileMenu.add(hint);
             fileMenu.addSeparator();
             fileMenu.add(statistics);
             fileMenu.add(returnb);
