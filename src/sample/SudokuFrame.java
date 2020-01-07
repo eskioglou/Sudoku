@@ -1,10 +1,8 @@
 package sample;
 
-import javafx.beans.binding.When;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,8 +14,6 @@ import static java.lang.Integer.parseInt;
 public class SudokuFrame extends JPanel {
         private JFrame f;
 
-
-
     public SudokuFrame(int dimension) {
             f = new JFrame("Sudoku Game");
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
@@ -27,7 +23,6 @@ public class SudokuFrame extends JPanel {
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setVisible(true);
             buildMenu();
-
 
             //Center View
             Toolkit t = Toolkit.getDefaultToolkit();
@@ -43,8 +38,6 @@ public class SudokuFrame extends JPanel {
             } catch (IOException ex) {
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
-
-
 
             GameReader reader= new GameReader(9);
             int[][] startingSudoku= reader.getUnsolvedSudoku();
@@ -141,9 +134,8 @@ public class SudokuFrame extends JPanel {
                 FileWriter fileWriter;
                 try {
 
-                    System.out.println("Please confirm your username: ");
-                    Scanner x1=new Scanner(System.in);
-                    String username=x1.next();
+                    Confirmation confirmation= new Confirmation();
+                    String username=confirmation.getUsername();
                     String filename= username+".txt";
                     fileWriter = new FileWriter(filename,false);
                     PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -263,8 +255,6 @@ public class SudokuFrame extends JPanel {
 
                                 frame1.add(panel);
 
-
-
                                 if (check.accept(k, l, 1)) {
                                     label1.setText("1 is acceptable \n");
                                 }
@@ -293,8 +283,6 @@ public class SudokuFrame extends JPanel {
                                     label9.setText("9 is acceptable \n");
                                 }
                         }
-
-
                 });
             });
 

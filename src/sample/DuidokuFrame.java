@@ -122,9 +122,8 @@ public class DuidokuFrame extends JPanel {
             FileWriter fileWriter;
             try {
 
-                System.out.println("Please confirm your username: ");
-                Scanner x1=new Scanner(System.in);
-                String username=x1.next();
+                Confirmation confirmation= new Confirmation();
+                String username=confirmation.getUsername();
                 String filename= username+".txt";
                 fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);

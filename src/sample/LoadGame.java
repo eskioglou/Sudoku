@@ -26,9 +26,8 @@ public class LoadGame {
     }
 
     File selectFile() throws IOException {
-        System.out.println("Please confirm your username: ");
-        Scanner x= new Scanner(System.in);
-        String username=x.next();
+        Confirmation confirmation= new Confirmation();
+        String username=confirmation.getUsername();
         String pathname= username+".txt";
         File file= new File(pathname);
         return file;

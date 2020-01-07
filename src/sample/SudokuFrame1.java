@@ -26,7 +26,6 @@ public class SudokuFrame1 extends JPanel {
         f.setVisible(true);
         buildMenu();
 
-
         //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension d = t.getScreenSize();
@@ -41,8 +40,6 @@ public class SudokuFrame1 extends JPanel {
         } catch (IOException ex) {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
-
-
 
         LoadGame reader= new LoadGame(9);
         int[][] startingSudoku= reader.getUnsolvedSudoku();
@@ -92,21 +89,43 @@ public class SudokuFrame1 extends JPanel {
         b.addActionListener(e -> {
             int[][] endingSudoku = reader.getSolvedSudoku();
             int[][] startingSudoku1= reader.getUnsolvedSudoku();
+
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
-                    String n= Tf[i][j].getText();
-                    int result = Integer.parseInt(n);
+                    String n=Tf[i][j].getText();
+
+                    int result = parseInt(n);
                     if(endingSudoku[i][j]==result && result!=startingSudoku1[i][j] ){
                         Tf[i][j].setBackground(Color.GREEN);
+
                     }
                     else if(endingSudoku[i][j]!=result){
                         Tf[i][j].setBackground(Color.RED);
+
                     }
                     Tf[i][j].setText(endingSudoku[i][j] +"");
                 }
             }
-            //JOptionPane.showMessageDialog(null,"You won the game!", "Congratulations", 1);
-            //JOptionPane.showMessageDialog(null,"You lost the game!","Try Again", 1);
+            Boolean found= false;
+            Boolean found1=false;
+            for (int i = 1; i <= dimension; i++) {
+                for (int j = 1; j <= dimension; j++) {
+                    if(Tf[i][j].getBackground()==Color.GREEN) {
+                        found=true;
+                        found1=false;
+                    }
+                    else{
+                        found1=true;
+                        found=false;
+                    }
+                }
+            }
+            if(!found&&found1) {
+                JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+            }
+            if(found&&!found1){
+                JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+            }
         });
 
 
@@ -117,9 +136,8 @@ public class SudokuFrame1 extends JPanel {
             FileWriter fileWriter;
             try {
 
-                System.out.println("Please confirm your username: ");
-                Scanner x1=new Scanner(System.in);
-                String username=x1.next();
+                Confirmation confirmation= new Confirmation();
+                String username=confirmation.getUsername();
                 String filename= username+".txt";
                 fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -239,8 +257,6 @@ public class SudokuFrame1 extends JPanel {
 
                     frame1.add(panel);
 
-
-
                     if (check.accept(k, l, 1)) {
                         label1.setText("1 is acceptable \n");
                     }
@@ -269,8 +285,6 @@ public class SudokuFrame1 extends JPanel {
                         label9.setText("9 is acceptable \n");
                     }
                 }
-
-
             });
         });
 
