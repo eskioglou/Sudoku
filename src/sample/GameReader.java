@@ -37,7 +37,7 @@ public class GameReader {
         return file1;
     }
 
-    File loadFile(){
+    File loadFile() throws IOException {
         System.out.println("Please confirm your username: ");
         Scanner x= new Scanner(System.in);
         String username=x.next();

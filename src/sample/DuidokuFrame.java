@@ -144,39 +144,117 @@ public class DuidokuFrame extends JPanel {
 
         });
 
-        JButton hint= new JButton("Hint");
-        f.add(hint);
-        hint.addActionListener(e -> {
-            CheckDui check= new CheckDui(Tf,4);
-            for (int i = 1; i <= dimension; i++) {
-                for (int j = 1; j <= dimension; j++) {
-                        System.out.println("╔═══════════════════════╗" );
-                        System.out.println("        H I N T S        ");
-                        System.out.println("╚═══════════════════════╝");
-                        System.out.println("{You have to give in the number of the row and column and you will get all the available values.}");
-                        System.out.println("Please give me the row: ");
-                        Scanner scanner= new Scanner(System.in);
-                        int k=scanner.nextInt();
-                        System.out.println("Please give me the column: ");
-                        int l=scanner.nextInt();
+            JButton hint= new JButton("Hint");
+            f.add(hint);
+            hint.addActionListener(e -> {
+                JButton OK;
+                JPanel panel;
+                JLabel label1, label2;
+                final JTextField text1, text2;
+
+                JFrame frame = new JFrame();
+                frame.setResizable(true);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(300, 200);
+                frame.setTitle("Hints");
+                frame.setVisible(true);
+
+                //Center View
+                Toolkit t1 = Toolkit.getDefaultToolkit();
+                Dimension d1 = t1.getScreenSize();
+                int x1 = (d1.width - f.getWidth()) / 2;
+                int y1 = (d1.height - f.getHeight()) / 2;
+                frame.setLocation(x1, y1);
+
+                //Set Image Icon
+                new ImageIcon();
+                try {
+                    frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                } catch (IOException ex) {
+                    System.out.println("When reading icon file: " + ex.getMessage());
+                }
+
+                label1 = new JLabel();
+                label1.setText("Row: ");
+                text1 = new JTextField(5);
+
+                label2 = new JLabel();
+                label2.setText("Column: ");
+                text2 = new JTextField(5);
+
+                OK = new JButton("OK");
+                panel = new JPanel(new GridLayout(3, 1));
+                panel.add(label1);
+                panel.add(text1);
+                panel.add(label2);
+                panel.add(text2);
+                panel.add(OK);
+                frame.add(panel, BorderLayout.CENTER);
+                OK.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        JFrame frame1= new JFrame();
+                        frame1.setSize(300,200);
+                        frame1.setTitle("Acceptable Numbers");
+                        frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        frame1.setVisible(true);
+
+                        //Center View
+                        Toolkit t1 = Toolkit.getDefaultToolkit();
+                        Dimension d1 = t1.getScreenSize();
+                        int x1 = (d1.width - f.getWidth()) / 2;
+                        int y1 = (d1.height - f.getHeight()) / 2;
+                        frame1.setLocation(x1, y1);
+
+                        //Set Image Icon
+                        new ImageIcon();
+                        try {
+                            frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                        } catch (IOException ex) {
+                            System.out.println("When reading icon file: " + ex.getMessage());
+                        }
+
+                        String row = text1.getText();
+                        String column = text2.getText();
+                        int k=Integer.parseInt(row);
+                        int l= Integer.parseInt(column);
+
+                        JLabel label1= new JLabel();
+                        JLabel label2= new JLabel();
+                        JLabel label3= new JLabel();
+                        JLabel label4= new JLabel();
+
+                        JPanel panel= new JPanel();
+
+                        panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+                        panel.add(label1);
+                        panel.add(label2);
+                        panel.add(label3);
+                        panel.add(label4);
+
+
+                        frame1.add(panel);
+
+
+                        CheckDui check= new CheckDui(Tf,4);
+
                         if (check.accept(k, l, 1)) {
-                            System.out.println( 1 + " is acceptable");
+                            label1.setText("1 is acceptable \n");
                         }
                         if (check.accept(k, l, 2)) {
-                            System.out.println(2 + " is acceptable");
+                            label2.setText("2 is acceptable \n");
                         }
                         if (check.accept(k, l, 3)) {
-                            System.out.println(3 + " is acceptable");
+                            label3.setText("3 is acceptable \n");
                         }
                         if (check.accept(k, l, 4)) {
-                            System.out.println( 4 + " is acceptable");
+                            label4.setText("4 is acceptable \n");
                         }
-                        return;
                     }
-                }
-        });
 
 
+                });
+            });
     }
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();

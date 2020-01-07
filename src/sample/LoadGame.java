@@ -9,6 +9,7 @@ public class LoadGame {
 
     private int[][] unsolvedSudoku;
     private int[][] solvedSudoku;
+
     public LoadGame (int dimensions){
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];

@@ -94,20 +94,24 @@ public class SudokuFrame extends JPanel {
             b.addActionListener(e -> {
                 int[][] endingSudoku = reader.getSolvedSudoku();
                 int[][] startingSudoku1= reader.getUnsolvedSudoku();
+
                     for (int i = 1; i <= dimension; i++) {
                         for (int j = 1; j <= dimension; j++) {
-                            String n= Tf[i][j].getText();
-                            int result = Integer.parseInt(n);
+                            String n=Tf[i][j].getText();
+
+                            int result = parseInt(n);
                             if(endingSudoku[i][j]==result && result!=startingSudoku1[i][j] ){
                                 Tf[i][j].setBackground(Color.GREEN);
+
                             }
                             else if(endingSudoku[i][j]!=result){
                                 Tf[i][j].setBackground(Color.RED);
+
                             }
                             Tf[i][j].setText(endingSudoku[i][j] +"");
                         }
                     }
-                //JOptionPane.showMessageDialog(null,"You won the game!", "Congratulations", 1);
+
                 //JOptionPane.showMessageDialog(null,"You lost the game!","Try Again", 1);
             });
 
@@ -295,8 +299,9 @@ public class SudokuFrame extends JPanel {
             loadgame.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    f.dispose();
-                    new SudokuFrame1(9);
+                        f.dispose();
+                        new SudokuFrame1(9);
+
                 }
             });
             statistics.addActionListener(new ActionListener() {
