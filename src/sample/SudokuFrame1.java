@@ -104,8 +104,8 @@ public class SudokuFrame1 extends JPanel {
             FileWriter fileWriter = null;
             try {
 
-                System.out.println();
-                Scanner x1=new Scanner(System.in);
+                System.out.println("Please confirm your username: ");
+                Scanner x1= new Scanner(System.in);
                 String username=x1.next();
                 String filename= username+".txt";
                 fileWriter = new FileWriter(filename,false);

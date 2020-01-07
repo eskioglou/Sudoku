@@ -24,7 +24,7 @@ public class LoadGame {
         return unsolvedSudoku;
     }
 
-    File selectFile(){
+    File selectFile() throws IOException {
         System.out.println("Please confirm your username: ");
         Scanner x= new Scanner(System.in);
         String username=x.next();
@@ -40,6 +40,8 @@ public class LoadGame {
             File file = selectFile();
             fileScanner = new Scanner(file);
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         assert fileScanner != null;

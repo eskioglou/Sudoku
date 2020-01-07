@@ -37,6 +37,15 @@ public class GameReader {
         return file1;
     }
 
+    File loadFile(){
+        System.out.println("Please confirm your username: ");
+        Scanner x= new Scanner(System.in);
+        String username=x.next();
+        String pathname= username+".txt";
+        File file= new File(pathname);
+        return file;
+    }
+
     private void ReadFile(){
         Scanner fileScanner = null;
         ArrayList<Integer> numbers = new ArrayList<>();
