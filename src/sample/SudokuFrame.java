@@ -111,8 +111,26 @@ public class SudokuFrame extends JPanel {
                             Tf[i][j].setText(endingSudoku[i][j] +"");
                         }
                     }
-
-                //JOptionPane.showMessageDialog(null,"You lost the game!","Try Again", 1);
+                Boolean found= false;
+                Boolean found1=false;
+                for (int i = 1; i <= dimension; i++) {
+                    for (int j = 1; j <= dimension; j++) {
+                        if(Tf[i][j].getBackground()==Color.GREEN) {
+                            found=true;
+                            found1=false;
+                        }
+                        else{
+                            found1=true;
+                            found=false;
+                        }
+                        }
+                    }
+                if(!found&&found1) {
+                    JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+                }
+                if(found&&!found1){
+                    JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+                }
             });
 
 
