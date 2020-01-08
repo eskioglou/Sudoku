@@ -15,7 +15,7 @@ public class SudokuFrame1 extends JPanel {
     private JFrame f;
 
 
-    public SudokuFrame1(int dimension) {
+    public  SudokuFrame1(int dimension) throws IOException {
         f = new JFrame("Sudoku Game");
         JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
         f.setLayout(new GridLayout(dimension+1, dimension));
@@ -40,7 +40,15 @@ public class SudokuFrame1 extends JPanel {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
-        LoadGame reader= new LoadGame(9);
+
+            System.out.println("!!!!!Please confirm your username: ");
+            Scanner xx= new Scanner(System.in);
+            String username=xx.nextLine();
+            String pathname= username+".txt";
+            File file1= new File(pathname);
+
+
+        GameReader reader= new GameReader(9,file1);
         int[][] startingSudoku= reader.getUnsolvedSudoku();
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
@@ -136,8 +144,8 @@ public class SudokuFrame1 extends JPanel {
             try {
 
                 Confirmation confirmation= new Confirmation();
-                String username=confirmation.getUsername();
-                String filename= username+".txt";
+                String username1=confirmation.getUsername();
+                String filename= username1+".txt";
                 fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);
 
@@ -300,14 +308,22 @@ public class SudokuFrame1 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 f.dispose();
-                new SudokuFrame(9);
+                try {
+                    new SudokuFrame(9);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
         loadgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 f.dispose();
-                new SudokuFrame1(9);
+                try {
+                    new SudokuFrame1(9);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
             }
         });

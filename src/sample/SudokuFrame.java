@@ -15,7 +15,7 @@ public class SudokuFrame extends JPanel {
         private JFrame f;
         public String score="0";
 
-    public SudokuFrame(int dimension) {
+    public SudokuFrame(int dimension) throws FileNotFoundException {
          Confirmation confirmation;
 
         f = new JFrame("Sudoku Game");
@@ -134,6 +134,8 @@ public class SudokuFrame extends JPanel {
                     BufferedReader br = null;
                     try {
                         br = new BufferedReader(new FileReader(file));
+                        StringBuffer stringBuffer= new StringBuffer();
+                        stringBuffer.append("0");
                     } catch (FileNotFoundException ex) {
                         ex.printStackTrace();
                     }
@@ -220,6 +222,7 @@ public class SudokuFrame extends JPanel {
                     fileWriter = new FileWriter(filename,false);
                     PrintWriter printWriter = new PrintWriter(fileWriter);
 
+                    GameReader reader1= new GameReader(9);
                     String n ;
                     for (int i = 1; i <= dimension; i++) {
                         for (int j = 1; j <= dimension; j++) {
@@ -228,6 +231,16 @@ public class SudokuFrame extends JPanel {
                         }
                         printWriter.println();
                     }
+
+                    int[][] array= reader.getSolvedSudoku();
+                    for (int i = 1; i <= dimension; i++) {
+                        for (int j = 1; j <= dimension; j++) {
+
+                            printWriter.print(array[i][j]+ " ");
+                        }
+                        printWriter.println();
+                    }
+
                     printWriter.close();
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -379,14 +392,22 @@ public class SudokuFrame extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     f.dispose();
-                    new SudokuFrame(9);
+                    try {
+                        new SudokuFrame(9);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             loadgame.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                         f.dispose();
+                    try {
                         new SudokuFrame1(9);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             });

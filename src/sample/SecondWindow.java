@@ -7,6 +7,7 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class SecondWindow
@@ -23,12 +24,20 @@ public class SecondWindow
         JButton sudoku= new JButton("Sudoku");
         sudoku.addActionListener(actionEvent -> {
             //frame.dispose();
-            new SudokuFrame(9);
+            try {
+                new SudokuFrame(9);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         JButton killer= new JButton("Killer Sudoku");
         killer.addActionListener(actionEvent -> {
             //frame.dispose();
-            new SudokuFrame(9);
+            try {
+                new SudokuFrame(9);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         });
         JButton duidoku= new JButton("Duidoku");
         duidoku.addActionListener(actionEvent -> {
