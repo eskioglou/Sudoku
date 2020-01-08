@@ -108,20 +108,17 @@ public class SudokuFrame extends JPanel {
                         }
                     }
                 Boolean found= false;
-                Boolean found1=false;
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
-                        if(Tf[i][j].getBackground()==Color.GREEN) {
+                        if(Tf[i][j].getBackground()==Color.GREEN && Tf[i][j].getBackground()!=Color.RED) {
                             found=true;
-                            found1=false;
                         }
-                        else{
-                            found1=true;
+                        else {
                             found=false;
                         }
                         }
                     }
-                if(!found&&found1) {
+                if(found==false) {
                     JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
                     System.out.println("Please give me your username: ");
                     Scanner sc= new Scanner(System.in);
@@ -163,7 +160,7 @@ public class SudokuFrame extends JPanel {
                     printWriter.close();
 
                 }
-                if(found){
+                if(found==true){
                     JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
                     System.out.println("WOOON! Please give me your username: ");
                     Scanner sc= new Scanner(System.in);
@@ -429,7 +426,15 @@ public class SudokuFrame extends JPanel {
 
                     JTextField field= new JTextField();
                    field.setSize(10,10);
-
+                    try {
+                        String filename=username+".txt";
+                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        String st;
+                        while ((st = br.readLine()) != null)
+                        field.setText(st);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
 
                    JLabel label= new JLabel("Your statistics: ");

@@ -41,7 +41,7 @@ public class GameReader {
 
     File selectFile(){
         File file;
-        file= new File("C:\\Users\\Anastasia Kara\\Desktop\\sudoku-3237_3116v12\\src\\sample\\sudoku");
+        file= new File("sudoku");
         file.mkdir();
         File[] s= file.listFiles();
         Random rand= new Random();
@@ -53,7 +53,7 @@ public class GameReader {
 
 
     private void ReadFile(File file) throws FileNotFoundException {
-        Scanner fileScanner = null;
+        Scanner fileScanner;
         ArrayList<Integer> numbers = new ArrayList<>();
         fileScanner = new Scanner(file);
 
