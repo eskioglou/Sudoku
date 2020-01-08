@@ -5,10 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 public class DuidokuFrame1 extends JPanel {
@@ -284,7 +281,6 @@ public class DuidokuFrame1 extends JPanel {
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
             }
         });
         returnb.addActionListener(new ActionListener() {

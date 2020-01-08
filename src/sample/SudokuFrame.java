@@ -13,9 +13,12 @@ import static java.lang.Integer.parseInt;
 
 public class SudokuFrame extends JPanel {
         private JFrame f;
+        public String score="0";
 
     public SudokuFrame(int dimension) {
-            f = new JFrame("Sudoku Game");
+         Confirmation confirmation;
+
+        f = new JFrame("Sudoku Game");
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
             f.setLayout(new GridLayout(dimension+1, dimension));
             f.setSize(700, 600);
@@ -81,12 +84,12 @@ public class SudokuFrame extends JPanel {
                     });
                 }
             }
-
             JButton b= new JButton("Solve");
             f.add(b);
             b.addActionListener(e -> {
                 int[][] endingSudoku = reader.getSolvedSudoku();
                 int[][] startingSudoku1= reader.getUnsolvedSudoku();
+                boolean wonGame=false;
 
                     for (int i = 1; i <= dimension; i++) {
                         for (int j = 1; j <= dimension; j++) {
@@ -120,9 +123,87 @@ public class SudokuFrame extends JPanel {
                     }
                 if(!found&&found1) {
                     JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+                    System.out.println("Please give me your username: ");
+                    Scanner sc= new Scanner(System.in);
+                    String username= sc.next();
+                    String fileName=username+"score.txt";
+
+                    //First read from the File.
+                    File file = new File(fileName);
+
+                    BufferedReader br = null;
+                    try {
+                        br = new BufferedReader(new FileReader(file));
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    String value = null;
+                    String st = null;
+                    while (true) {
+                        try {
+                            if (!((st = br.readLine()) != null)) break;
+                            value=st;
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+
+                    //Then add the score.
+                    FileWriter fileWriter = null;
+                    try {
+                        fileWriter = new FileWriter(fileName,false);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    PrintWriter printWriter = new PrintWriter(fileWriter);
+                    printWriter.print(value);
+                    printWriter.close();
+
                 }
-                if(found&&!found1){
+                if(found){
                     JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+                    System.out.println("WOOON! Please give me your username: ");
+                    Scanner sc= new Scanner(System.in);
+                    String username= sc.next();
+                    String fileName=username+"score.txt";
+
+                    //First read from the File.
+                    File file = new File(fileName);
+
+                    BufferedReader br = null;
+                    try {
+                        br = new BufferedReader(new FileReader(file));
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    String value1 = null;
+                    String st = null;
+                    while (true) {
+                        try {
+                            if (!((st = br.readLine()) != null)) break;
+                            value1=st;
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+
+                    }
+
+                    //Then add the score.
+                    FileWriter fileWriter = null;
+                    try {
+                        fileWriter = new FileWriter(fileName,false);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    PrintWriter printWriter = new PrintWriter(fileWriter);
+                    int value2=Integer.parseInt(value1);
+                    value2++;
+                    printWriter.print(value2);
+
+                    printWriter.close();
+
                 }
             });
 
@@ -133,9 +214,8 @@ public class SudokuFrame extends JPanel {
 
                 FileWriter fileWriter;
                 try {
-
-                    Confirmation confirmation= new Confirmation();
-                    String username=confirmation.getUsername();
+                    Confirmation confirmation1= new Confirmation();
+                    String username=confirmation1.getUsername();
                     String filename= username+".txt";
                     fileWriter = new FileWriter(filename,false);
                     PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -313,7 +393,31 @@ public class SudokuFrame extends JPanel {
             statistics.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+
                     f.dispose();
+                   JFrame frame1= new JFrame();
+                   frame1.setSize(300,200);
+                   frame1.setTitle("Statistics");
+                   frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                   frame1.setVisible(true);
+
+                   System.out.println("Confirm your username: ");
+                   Scanner x= new Scanner(System.in);
+                   String username= x.nextLine();
+
+
+                    JTextField field= new JTextField();
+                   field.setSize(10,10);
+
+
+
+                   JLabel label= new JLabel("Your statistics: ");
+
+                   JPanel panel= new JPanel();
+                   panel.add(label);
+                   panel.add(field);
+
+                    frame1.add(panel);
                 }
             });
             returnb.addActionListener(new ActionListener() {
@@ -335,4 +439,5 @@ public class SudokuFrame extends JPanel {
 
             f.setJMenuBar(bar);
         }
+
     }

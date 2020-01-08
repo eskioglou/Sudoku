@@ -15,7 +15,6 @@ public class SudokuFrame1 extends JPanel {
     private JFrame f;
 
 
-
     public SudokuFrame1(int dimension) {
         f = new JFrame("Sudoku Game");
         JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
