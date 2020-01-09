@@ -50,7 +50,7 @@ public class KillerFrame extends JPanel {
             for (int j = 1; j <= dimension; j++) {
                 Tf[i][j] = new JTextField();
                 Tf[i][j].setText(startingKiller[i-1][j-1] +"");
-                Tf[i][j].setToolTipText("100");
+                Tf[i][j].setToolTipText(reader.getSum(startingKiller[i-1][j-1]) +"");
                 f.add(Tf[i][j]);
             }
         }

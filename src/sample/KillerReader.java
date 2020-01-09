@@ -10,24 +10,22 @@ import java.util.Scanner;
 public class KillerReader {
     private int[][] unsolvedKiller;
     private int[][] solvedKiller;
-    int dimension;
+    private int[] sums;
     int team = 1;
 
     public KillerReader(int dimensions){
         unsolvedKiller = new int[dimensions+1][dimensions+1];
         solvedKiller = new int[dimensions+1][dimensions+1];
-        this.dimension = dimensions;
-
+        sums = new int[30];
         ReadFile();
     }
 
-    public int[][] getSolvedKiller() {
-        return solvedKiller;
-    }
+    public int[][] getSolvedKiller() { return solvedKiller; }
 
-    public int[][] getUnsolvedKiller() {
-        return unsolvedKiller;
-    }
+    public int[][] getUnsolvedKiller() { return unsolvedKiller; }
+
+    public int getSum(int group){
+        return sums[group]; }
 
     File selectFile(){
         File file;
@@ -47,6 +45,7 @@ public class KillerReader {
             e.printStackTrace();
         }
         assert fileScanner != null;
+        int group = 0;
 
         while (fileScanner.hasNextLine()) {
             String str = fileScanner.nextLine();
@@ -55,25 +54,25 @@ public class KillerReader {
             int t = lineScanner.nextInt();
 
             if(t != 100) {
-                //char sum = t.charAt(0);
+                String num ;
+                sums[group] = t;
                 while (lineScanner.hasNext()) {
-                    String num = lineScanner.next();
+                    num = lineScanner.next();
                     int i = Integer.parseInt(num);
                     num = lineScanner.next();
                     int j = Integer.parseInt(num);
-                    int te = team;
-                    unsolvedKiller[i][j] = (char)te;
+                    unsolvedKiller[i][j] = group;
                 }
-                team++;
+                group++;
             }else{
 
 
-                for(int a=0; a<dimension; a++){
+                for(int a=0; a<9; a++){
                     String str2 = fileScanner.nextLine();
                     Scanner lineScanner2 = new Scanner(str2);
                     lineScanner2.useDelimiter("[,\n]");
 
-                    for(int b=0; b<dimension; b++) {
+                    for(int b=0; b<9; b++) {
                         int num = lineScanner2.nextInt();
 
                         solvedKiller[a][b] = num;
