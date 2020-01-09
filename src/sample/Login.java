@@ -1,6 +1,8 @@
 package sample;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Login {
@@ -32,6 +34,15 @@ public class Login {
         catch (Exception e){
             System.out.println("Error");
         }
+        File file = new File(username+"score.txt");
+        try {
+            FileWriter myWriter = new FileWriter(file);
+            myWriter.write("0");
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
+
 }

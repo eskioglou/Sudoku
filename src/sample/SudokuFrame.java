@@ -6,17 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
+import static sample.Confirmation.textfield;
 
 public class SudokuFrame extends JPanel {
         private JFrame f;
         public String score="0";
 
     public SudokuFrame(int dimension) throws FileNotFoundException {
-         Confirmation confirmation;
 
         f = new JFrame("Sudoku Game");
             JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
@@ -122,9 +123,13 @@ public class SudokuFrame extends JPanel {
                 }
                 if (!found && found1) {
                     JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
-                    System.out.println("Please give me your username: ");
-                    Scanner sc = new Scanner(System.in);
-                    String username = sc.next();
+                    String username= null;
+                    try {
+                        Confirmation confirmation= new Confirmation();
+                        username = confirmation.getUsername();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     String fileName = username + "score.txt";
 
                     //First read from the File.
@@ -163,9 +168,14 @@ public class SudokuFrame extends JPanel {
                 if (found && !found1) {
                     if (found) {
                         JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
-                        System.out.println("WOOON! Please give me your username: ");
-                        Scanner sc = new Scanner(System.in);
-                        String username = sc.next();
+                        Confirmation confirmation1= new Confirmation();
+                        String username= null;
+                        try {
+                            Confirmation confirmation= new Confirmation();
+                            username = confirmation.getUsername();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         String fileName = username + "score.txt";
 
                         //First read from the File.
@@ -189,7 +199,6 @@ public class SudokuFrame extends JPanel {
                             }
 
                         }
-
                         //Then add the score.
                         FileWriter fileWriter = null;
                         try {
@@ -221,8 +230,8 @@ public class SudokuFrame extends JPanel {
                     fileWriter = new FileWriter(filename,false);
                     PrintWriter printWriter = new PrintWriter(fileWriter);
 
-                    SudokuReader reader1= new SudokuReader(9);
-                    String n ;
+                    new SudokuReader(9);
+                    String n;
                     for (int i = 1; i <= dimension; i++) {
                         for (int j = 1; j <= dimension; j++) {
                             n=Tf[i][j].getText();
@@ -413,68 +422,80 @@ public class SudokuFrame extends JPanel {
             statistics.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    MyDrawPanel draw;
-                    JFrame frame=new JFrame("Hints");
-                    JPanel panel=new JPanel();
-                    draw=new MyDrawPanel();
+                    f = new JFrame("Confirmation");
+                    JLabel label = new JLabel("Please confirm your username: ");
+                    JButton button = new JButton("submit");
+                    textfield = new JTextField(16);
+                    JPanel panel = new JPanel();
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent actionEvent) {
+                            MyDrawPanel draw;
+                            String username1= textfield.getText();
+                            JFrame frame = new JFrame(username1+"'s Statistics");
+                            JPanel panel = new JPanel();
+                            draw = new MyDrawPanel();
 
-                    frame.getContentPane().add(BorderLayout.CENTER,draw);
-                    frame.getContentPane().add(panel,BorderLayout.NORTH);
-                    frame.setSize(700,400);
+                            frame.getContentPane().add(BorderLayout.CENTER, draw);
+                            frame.getContentPane().add(panel, BorderLayout.NORTH);
+                            frame.setSize(700, 400);
 
-                    Toolkit t = Toolkit.getDefaultToolkit();
-                    Dimension d = t.getScreenSize();
-                    int x = (d.width-frame.getWidth())/2;
-                    int y = (d.height-frame.getHeight())/2;
-                    frame.setLocation(x, y);
+                            Toolkit t = Toolkit.getDefaultToolkit();
+                            Dimension d = t.getScreenSize();
+                            int x = (d.width - frame.getWidth()) / 2;
+                            int y = (d.height - frame.getHeight()) / 2;
+                            frame.setLocation(x, y);
 
-                    //Set Image Icon
-                    ImageIcon icon= new ImageIcon();
-                    try {
-                        frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
-                    }
-                    catch(IOException ex) {
-                        System.out.println("When reading icon file: " + ex.getMessage());
-                    }
+                            //Set Image Icon
+                            ImageIcon icon = new ImageIcon();
+                            try {
+                                frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                            } catch (IOException ex) {
+                                System.out.println("When reading icon file: " + ex.getMessage());
+                            }
 
-                    System.out.println("Confirm your username: ");
-                    Scanner sc= new Scanner(System.in);
-                    String username= sc.nextLine();
+                            JTextField field = new JTextField();
+                            field.setSize(10, 10);
+                            field.setEditable(false);
+                            try {
+                                String filename = username1 + "score.txt";
+                                BufferedReader br = new BufferedReader(new FileReader(filename));
+                                String st;
+                                while ((st = br.readLine()) != null)
+                                    field.setText(st);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
-                    JTextField field= new JTextField();
-                    field.setSize(10,10);
-                    field.setEditable(false);
-                    try {
-                        String filename=username+"score.txt";
-                        BufferedReader br = new BufferedReader(new FileReader(filename));
-                        String st;
-                        while ((st = br.readLine()) != null)
-                            field.setText(st);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                            JLabel label = new JLabel(username1 + "'s statistics: ");
+                            panel.add(label);
+                            panel.add(field);
+                            panel.setBackground(Color.LIGHT_GRAY);
 
+                            try {
+                                String filename = username1 + "score.txt";
+                                BufferedReader br = new BufferedReader(new FileReader(filename));
+                                String st;
+                                while ((st = br.readLine()) != null)
+                                    field.setText(st);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            frame.setVisible(true);
 
-                    JLabel label= new JLabel(username+"'s statistics: ");
+                        }
+                    });
+
                     panel.add(label);
-                    panel.add(field);
-                    panel.setBackground(Color.LIGHT_GRAY);
+                    panel.add(textfield);
+                    panel.add(button);
 
-
-                    try {
-                        String filename=username+"score.txt";
-                        BufferedReader br = new BufferedReader(new FileReader(filename));
-                        String st;
-                        while ((st = br.readLine()) != null)
-                            field.setText(st);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    f.add(panel);
+                    f.setSize(300, 100);
+                    f.show();}
 
 
 
-                    frame.setVisible(true);
-                }
                 class MyDrawPanel extends JPanel
                 {
                     @Override
@@ -486,6 +507,7 @@ public class SudokuFrame extends JPanel {
                 }
 
             });
+
             returnb.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -505,5 +527,5 @@ public class SudokuFrame extends JPanel {
 
             f.setJMenuBar(bar);
         }
-
     }
+//
