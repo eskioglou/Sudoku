@@ -2,8 +2,6 @@ package sample;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -11,12 +9,14 @@ public class KillerReader {
     private int[][] unsolvedKiller;
     private int[][] solvedKiller;
     private int[] sums;
-    int team = 1;
 
     public KillerReader(int dimensions){
         unsolvedKiller = new int[dimensions+1][dimensions+1];
         solvedKiller = new int[dimensions+1][dimensions+1];
-        sums = new int[30];
+        sums = new int[45];
+        for (int i = 0; i<45; i++){
+            sums[i] = 0;
+        }
         ReadFile();
     }
 
@@ -25,19 +25,23 @@ public class KillerReader {
     public int[][] getUnsolvedKiller() { return unsolvedKiller; }
 
     public int getSum(int group){
-        return sums[group]; }
+        return sums[group];
+    }
 
     File selectFile(){
         File file;
-        file= new File("killer/k1.txt");
-        return file;
+        file= new File("killer");
+        file.mkdir();
+        File[] s= file.listFiles();
+        Random rand= new Random();
+        assert s!=null;
+        File file1;
+        file1 = s[rand.nextInt(s.length -1)];
+        return file1;
     }
-
-
 
     private void ReadFile(){
         Scanner fileScanner = null;
-        ArrayList<Character> numbers = new ArrayList<>();
         try {
             File file = selectFile();
             fileScanner = new Scanner(file);
@@ -46,13 +50,11 @@ public class KillerReader {
         }
         assert fileScanner != null;
         int group = 0;
-
         while (fileScanner.hasNextLine()) {
             String str = fileScanner.nextLine();
             Scanner lineScanner = new Scanner(str);
             lineScanner.useDelimiter("[,\n]");
             int t = lineScanner.nextInt();
-
             if(t != 100) {
                 String num ;
                 sums[group] = t;
@@ -65,8 +67,6 @@ public class KillerReader {
                 }
                 group++;
             }else{
-
-
                 for(int a=0; a<9; a++){
                     String str2 = fileScanner.nextLine();
                     Scanner lineScanner2 = new Scanner(str2);
@@ -77,18 +77,9 @@ public class KillerReader {
 
                         solvedKiller[a][b] = num;
                     }
-
                 }
-                for(int i=0; i<9; i++){
-                    System.out.println(" ");
-                    for(int j = 0; j<9; j++){
-                        System.out.print(solvedKiller[i][j]+ " ");
-                    }
-                }
-                break;}
-
+                break;
+            }
         }
-
-
     }
 }

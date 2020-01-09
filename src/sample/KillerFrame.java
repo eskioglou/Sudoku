@@ -305,7 +305,7 @@ public class KillerFrame extends JPanel {
                     int k = i;
                     int l = j;
                     Tf[i][j].addActionListener(e -> {
-                        Check check = new Check(Tf, dimension);
+                        CheckKiller check = new CheckKiller(Tf, dimension);
                         String mes = e.getActionCommand();
                         int value = parseInt(mes);
                         if (value <= 0 || value > 9) {
@@ -317,9 +317,19 @@ public class KillerFrame extends JPanel {
                         } else {
                             boolean flag = check.accept(k, l, value);
                             if (flag) {
-                                String str = "" + value;
-                                Tf[k][l].setText(str);
-                                JOptionPane.showMessageDialog(null, "Value set");
+                                String str = Tf[k][l].getToolTipText();
+                                int sum = Integer.parseInt(str);
+                                boolean groupSum = check.checkSum(startingKiller[k - 1][l - 1], startingKiller, sum);
+                                if(groupSum){
+                                    str = "" + value;
+                                    Tf[k][l].setText(str);
+                                    JOptionPane.showMessageDialog(null, "Value set");
+                                }
+                                else{
+                                    str = "0";
+                                    Tf[k][l].setText(str);
+                                    JOptionPane.showMessageDialog(null, "Value could not be set");
+                                }
                             } else {
                                 String str = "0";
                                 Tf[k][l].setText(str);
