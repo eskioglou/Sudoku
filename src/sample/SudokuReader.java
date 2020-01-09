@@ -5,25 +5,25 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class GameReader {
+public class SudokuReader {
 
     private int[][] unsolvedSudoku;
     private int[][] solvedSudoku;
 
-    public GameReader(int dimensions,File file) throws IOException {
+    public SudokuReader(int dimensions,File file) throws IOException {
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
         ReadFile(file);
     }
 
-    public GameReader(int dimensions) throws FileNotFoundException {
+    public SudokuReader(int dimensions) throws FileNotFoundException {
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
 
         ReadFile(selectFile());
     }
 
-    public GameReader(int dimensions,File file,int number) throws FileNotFoundException {
+    public SudokuReader(int dimensions,File file,int number) throws FileNotFoundException {
         int random=0;
         number=random;
         unsolvedSudoku = new int[dimensions+1][dimensions+1];

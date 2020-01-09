@@ -25,6 +25,7 @@ public class SudokuFrame extends JPanel {
             f.setResizable(false);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             f.setVisible(true);
+
             buildMenu();
 
             //Center View
@@ -42,19 +43,27 @@ public class SudokuFrame extends JPanel {
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
 
-            GameReader reader= new GameReader(9);
+
+
+
+            SudokuReader reader= new SudokuReader(9);
             int[][] startingSudoku= reader.getUnsolvedSudoku();
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
                     Tf[i][j] = new JTextField();
                     Tf[i][j].setText(startingSudoku[i][j] +"");
+                    Tf[i][j].setToolTipText("100");
                     if(startingSudoku[i][j]!=0) {
                         Tf[i][j].setFont(new Font("Tahoma", Font.BOLD, 14));
                         Tf[i][j].setEditable(false);
+
+
                     }
                     f.add(Tf[i][j]);
                 }
             }
+
+
             for(int i = 1; i<= dimension; i++){
                 for(int j = 1; j<=dimension; j++){
                     int k = i;
@@ -219,7 +228,7 @@ public class SudokuFrame extends JPanel {
                     fileWriter = new FileWriter(filename,false);
                     PrintWriter printWriter = new PrintWriter(fileWriter);
 
-                    GameReader reader1= new GameReader(9);
+                    SudokuReader reader1= new SudokuReader(9);
                     String n ;
                     for (int i = 1; i <= dimension; i++) {
                         for (int j = 1; j <= dimension; j++) {

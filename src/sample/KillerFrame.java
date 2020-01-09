@@ -5,27 +5,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-public class DuidokuFrame1 extends JPanel {
+import static java.lang.Integer.parseInt;
+
+public class KillerFrame extends JPanel {
     private JFrame f;
 
-
-    DuidokuFrame1(int dimension) throws IOException {
-        f = new JFrame("Duidoku Game");
-        JTextField[][] Tf = new JTextField[dimension + 1][dimension + 1];
-        f.setLayout(new GridLayout(dimension + 1, dimension));
-        f.setSize(600, 500);
+    public KillerFrame(int dimension) {
+        f = new JFrame("Killer Game");
+        JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
+        f.setLayout(new GridLayout(dimension+1, dimension));
+        f.setSize(700, 600);
+        f.setResizable(false);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
+
         buildMenu();
 
         //Center View
         Toolkit t = Toolkit.getDefaultToolkit();
         Dimension d = t.getScreenSize();
-        int x = (d.width - f.getWidth()) / 2;
-        int y = (d.height - f.getHeight()) / 2;
+        int x = (d.width-f.getWidth())/2;
+        int y = (d.height-f.getHeight())/2;
         f.setLocation(x, y);
 
         //Set Image Icon
@@ -37,122 +42,124 @@ public class DuidokuFrame1 extends JPanel {
         }
 
 
-        System.out.println("!!!!!Please confirm your username: ");
-        Scanner xx= new Scanner(System.in);
-        String username=xx.nextLine();
-        String pathname= username+".txt";
-        File file1= new File(pathname);
 
-        SudokuReader game = new SudokuReader(4,file1,1);
-        int[][] array = game.getUnsolvedSudoku();
+
+        KillerReader reader= new KillerReader(9);
+        int[][] startingKiller= reader.getUnsolvedKiller();
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
                 Tf[i][j] = new JTextField();
-                Tf[i][j].setText(array[i][j] + " ");
+                Tf[i][j].setText(startingKiller[i-1][j-1] +"");
+                Tf[i][j].setToolTipText("100");
                 f.add(Tf[i][j]);
             }
         }
 
-        for (int i = 1; i <= dimension; i++) {
-            for (int j = 1; j <= dimension; j++) {
+
+        for(int i = 1; i<= dimension; i++){
+            for(int j = 1; j<=dimension; j++){
                 int k = i;
                 int l = j;
                 Tf[i][j].addActionListener(e -> {
-                    CheckDui check = new CheckDui(Tf, dimension);
+                    Check check = new Check(Tf, dimension);
                     String mes = e.getActionCommand();
-                    int value = Integer.parseInt(mes);
-                    if (value <= 0 || value > 4) {
+                    int value = parseInt(mes);
+                    if (value<=0 || value >9){
                         String str = "0";
                         Tf[k][l].setText(str);
                         JOptionPane.showMessageDialog(null,
-                                "Error: Please enter number from 1 to 4", "Error Message",
+                                "Error: Please enter number from 1 to 9", "Error Message",
                                 JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        boolean end = false;
+                    }else{
                         boolean flag = check.accept(k, l, value);
-                        if (flag) {
+                        if(flag){
                             String str = "" + value;
                             Tf[k][l].setText(str);
-
-                            for (int a = 0; a < 4; a++) {
-                                for (int b = 0; b < 4; b++) {
-                                    boolean f = check.makeInactive(a, b);
-                                    if (f) {
-                                        int i2 = check.getNumi() + 1;
-                                        int j2 = check.getNumj() + 1;
-                                        Tf[i2][j2].setText("9");
-
-                                    }
-                                }
-                            }
                             JOptionPane.showMessageDialog(null, "Value set");
-                            check.movePC();
-                            int num = check.getVal();
-                            String v = "" + num;
-                            int i1 = check.getNumi() + 1;
-                            int j1 = check.getNumj() + 1;
-                            Tf[i1][j1].setText(v);
-
-                            for (int a = 0; a < 4; a++) {
-                                for (int b = 0; b < 4; b++) {
-                                    boolean f = check.makeInactive(a, b);
-                                    if (f) {
-                                        int i3 = check.getNumi() + 1;
-                                        int j3 = check.getNumj() + 1;
-                                        Tf[i3][j3].setText("9");
-
-                                    }
-                                }
-                            }
-                            JOptionPane.showMessageDialog(null, "Your turn to play");
-                        } else {
+                        }else{
                             String str = "0";
                             Tf[k][l].setText(str);
                             JOptionPane.showMessageDialog(null, "Value could not be set");
                         }
-
                     }
-
                 });
             }
         }
-        JButton b = new JButton("Solve");
+
+        JButton b= new JButton("Solve");
         f.add(b);
         b.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "You can't solve Duidoku. \n Please check Hint for help.");
+            int[][] endingSudoku = reader.getSolvedKiller();
+            int[][] startingSudoku1= reader.getUnsolvedKiller();
+
+            for (int i = 1; i <= dimension; i++) {
+                for (int j = 1; j <= dimension; j++) {
+                    String n=Tf[i][j].getText();
+
+                    int result = parseInt(n);
+                    if(endingSudoku[i-1][j-1]==result && result!=startingSudoku1[i-1][j-1] ){
+                        Tf[i][j].setBackground(Color.GREEN);
+
+                    }
+                    else if(endingSudoku[i-1][j-1]!=result){
+                        Tf[i][j].setBackground(Color.RED);
+
+                    }
+                    Tf[i][j].setText(endingSudoku[i-1][j-1] +"");
+                }
+            }
+            Boolean found= false;
+            Boolean found1=false;
+            for (int i = 1; i <= dimension; i++) {
+                for (int j = 1; j <= dimension; j++) {
+                    if(Tf[i][j].getBackground()==Color.GREEN) {
+                        found=true;
+                        found1=false;
+                    }
+                    else{
+                        found1=true;
+                        found=false;
+                    }
+                }
+            }
+            if(!found&&found1) {
+                JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+            }
+            if(found&&!found1){
+                JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+            }
         });
 
-        JButton save = new JButton("Save");
+
+        JButton save= new JButton("Save");
         f.add(save);
         save.addActionListener(e -> {
 
             FileWriter fileWriter;
             try {
 
-                Confirmation confirmation = new Confirmation();
-                String username1 = confirmation.getUsername();
-                String filename = username1 + ".txt";
-                fileWriter = new FileWriter(filename, false);
+                Confirmation confirmation= new Confirmation();
+                String username=confirmation.getUsername();
+                String filename= username+".txt";
+                fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);
 
-                SudokuReader reader1 = new SudokuReader(4,file1,1);
-                String n;
+                String n ;
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
-                        n = Tf[i][j].getText();
-                        printWriter.print(n + " ");
+                        n=Tf[i][j].getText();
+                        printWriter.print(n+" ");
                     }
                     printWriter.println();
                 }
-
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+                printWriter.close();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
+
         });
 
-        JButton hint = new JButton("Hint");
+        JButton hint= new JButton("Hint");
         f.add(hint);
         hint.addActionListener(e -> {
             JButton OK;
@@ -182,6 +189,7 @@ public class DuidokuFrame1 extends JPanel {
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
 
+            Check check = new Check(Tf, 9);
             label1 = new JLabel();
             label1.setText("Row: ");
             text1 = new JTextField(5);
@@ -201,8 +209,8 @@ public class DuidokuFrame1 extends JPanel {
             OK.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
-                    JFrame frame1 = new JFrame();
-                    frame1.setSize(300, 200);
+                    JFrame frame1= new JFrame();
+                    frame1.setSize(300,200);
                     frame1.setTitle("Acceptable Numbers");
                     frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame1.setVisible(true);
@@ -224,27 +232,32 @@ public class DuidokuFrame1 extends JPanel {
 
                     String row = text1.getText();
                     String column = text2.getText();
-                    int k = Integer.parseInt(row);
-                    int l = Integer.parseInt(column);
+                    int k=Integer.parseInt(row);
+                    int l= Integer.parseInt(column);
 
-                    JLabel label1 = new JLabel();
-                    JLabel label2 = new JLabel();
-                    JLabel label3 = new JLabel();
-                    JLabel label4 = new JLabel();
+                    JLabel label1= new JLabel();
+                    JLabel label2= new JLabel();
+                    JLabel label3= new JLabel();
+                    JLabel label4= new JLabel();
+                    JLabel label5= new JLabel();
+                    JLabel label6= new JLabel();
+                    JLabel label7= new JLabel();
+                    JLabel label8= new JLabel();
+                    JLabel label9= new JLabel();
+                    JPanel panel= new JPanel();
 
-                    JPanel panel = new JPanel();
-
-                    panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+                    panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
                     panel.add(label1);
                     panel.add(label2);
                     panel.add(label3);
                     panel.add(label4);
-
+                    panel.add(label5);
+                    panel.add(label6);
+                    panel.add(label7);
+                    panel.add(label8);
+                    panel.add(label9);
 
                     frame1.add(panel);
-
-
-                    CheckDui check = new CheckDui(Tf, 4);
 
                     if (check.accept(k, l, 1)) {
                         label1.setText("1 is acceptable \n");
@@ -258,13 +271,26 @@ public class DuidokuFrame1 extends JPanel {
                     if (check.accept(k, l, 4)) {
                         label4.setText("4 is acceptable \n");
                     }
+                    if (check.accept(k, l, 5)) {
+                        label5.setText("5 is acceptable \n");
+                    }
+                    if (check.accept(k, l, 6)) {
+                        label6.setText("6 is acceptable \n");
+                    }
+                    if (check.accept(k, l, 7)) {
+                        label7.setText("7 is acceptable \n");
+                    }
+                    if (check.accept(k, l, 8)) {
+                        label8.setText("8 is acceptable \n");
+                    }
+                    if (check.accept(k, l, 9)) {
+                        label9.setText("9 is acceptable \n");
+                    }
                 }
-
-
             });
         });
-    }
 
+    }
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu("Menu");
@@ -277,26 +303,21 @@ public class DuidokuFrame1 extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 f.dispose();
-                new DuidokuFrame(4);
+                new KillerFrame(9);
             }
         });
         loadgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 f.dispose();
-                try {
-                    new DuidokuFrame1(4);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                new KillerFrame(9);
+
             }
         });
-
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                f.dispose();
             }
         });
         returnb.addActionListener(new ActionListener() {

@@ -33,11 +33,7 @@ public class SecondWindow
         JButton killer= new JButton("Killer Sudoku");
         killer.addActionListener(actionEvent -> {
             //frame.dispose();
-            try {
-                new SudokuFrame(9);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            new KillerFrame(9);
         });
         JButton duidoku= new JButton("Duidoku");
         duidoku.addActionListener(actionEvent -> {

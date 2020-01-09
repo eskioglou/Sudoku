@@ -47,7 +47,7 @@ public class SudokuFrame1 extends JPanel {
             String pathname= username+".txt";
             File file1= new File(pathname);
 
-        GameReader reader= new GameReader(9,file1);
+        SudokuReader reader= new SudokuReader(9);
         int[][] startingSudoku= reader.getUnsolvedSudoku();
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
