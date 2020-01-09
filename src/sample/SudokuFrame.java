@@ -14,7 +14,6 @@ import static java.lang.Integer.parseInt;
 public class SudokuFrame extends JPanel {
         private JFrame f;
         public String score="0";
-        private int playedGames=0;
 
     public SudokuFrame(int dimension) throws FileNotFoundException {
          Confirmation confirmation;
@@ -45,8 +44,6 @@ public class SudokuFrame extends JPanel {
             }
 
 
-
-
             SudokuReader reader= new SudokuReader(9);
             int[][] startingSudoku= reader.getUnsolvedSudoku();
             for (int i = 1; i <= dimension; i++) {
@@ -57,13 +54,10 @@ public class SudokuFrame extends JPanel {
                     if(startingSudoku[i][j]!=0) {
                         Tf[i][j].setFont(new Font("Tahoma", Font.BOLD, 14));
                         Tf[i][j].setEditable(false);
-
-
                     }
                     f.add(Tf[i][j]);
                 }
             }
-
 
             for(int i = 1; i<= dimension; i++){
                 for(int j = 1; j<=dimension; j++){
