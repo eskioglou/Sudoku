@@ -14,6 +14,7 @@ import static java.lang.Integer.parseInt;
 public class SudokuFrame extends JPanel {
         private JFrame f;
         public String score="0";
+        private int playedGames=0;
 
     public SudokuFrame(int dimension) throws FileNotFoundException {
          Confirmation confirmation;
@@ -97,42 +98,40 @@ public class SudokuFrame extends JPanel {
             f.add(b);
             b.addActionListener(e -> {
                 int[][] endingSudoku = reader.getSolvedSudoku();
-                int[][] startingSudoku1= reader.getUnsolvedSudoku();
-                boolean wonGame=false;
+                int[][] startingSudoku1 = reader.getUnsolvedSudoku();
 
-                    for (int i = 1; i <= dimension; i++) {
-                        for (int j = 1; j <= dimension; j++) {
-                            String n=Tf[i][j].getText();
 
-                            int result = parseInt(n);
-                            if(endingSudoku[i][j]==result && result!=startingSudoku1[i][j] ){
-                                Tf[i][j].setBackground(Color.GREEN);
-
-                            }
-                            else if(endingSudoku[i][j]!=result){
-                                Tf[i][j].setBackground(Color.RED);
-
-                            }
-                            Tf[i][j].setText(endingSudoku[i][j] +"");
-                        }
-                    }
-                Boolean found= false;
                 for (int i = 1; i <= dimension; i++) {
                     for (int j = 1; j <= dimension; j++) {
-                        if(Tf[i][j].getBackground()==Color.GREEN && Tf[i][j].getBackground()!=Color.RED) {
-                            found=true;
+                        String n = Tf[i][j].getText();
+                        int result = parseInt(n);
+                        if (endingSudoku[i][j] == result && result != startingSudoku1[i][j]) {
+                            Tf[i][j].setBackground(Color.GREEN);
+                        } else if (endingSudoku[i][j] != result) {
+                            Tf[i][j].setBackground(Color.RED);
                         }
-                        else {
-                            found=false;
-                        }
+                        Tf[i][j].setText(endingSudoku[i][j] + "");
+                    }
+                }
+                Boolean found = false;
+                Boolean found1 = false;
+                for (int i = 1; i <= dimension; i++) {
+                    for (int j = 1; j <= dimension; j++) {
+                        if (Tf[i][j].getBackground() == Color.GREEN) {
+                            found = true;
+                            found1 = false;
+                        } else {
+                            found1 = true;
+                            found = false;
                         }
                     }
-                if(found==false) {
+                }
+                if (!found && found1) {
                     JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
                     System.out.println("Please give me your username: ");
-                    Scanner sc= new Scanner(System.in);
-                    String username= sc.next();
-                    String fileName=username+"score.txt";
+                    Scanner sc = new Scanner(System.in);
+                    String username = sc.next();
+                    String fileName = username + "score.txt";
 
                     //First read from the File.
                     File file = new File(fileName);
@@ -140,8 +139,6 @@ public class SudokuFrame extends JPanel {
                     BufferedReader br = null;
                     try {
                         br = new BufferedReader(new FileReader(file));
-                        StringBuffer stringBuffer= new StringBuffer();
-                        stringBuffer.append("0");
                     } catch (FileNotFoundException ex) {
                         ex.printStackTrace();
                     }
@@ -151,7 +148,7 @@ public class SudokuFrame extends JPanel {
                     while (true) {
                         try {
                             if (!((st = br.readLine()) != null)) break;
-                            value=st;
+                            value = st;
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
@@ -160,7 +157,7 @@ public class SudokuFrame extends JPanel {
                     //Then add the score.
                     FileWriter fileWriter = null;
                     try {
-                        fileWriter = new FileWriter(fileName,false);
+                        fileWriter = new FileWriter(fileName, false);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -169,49 +166,51 @@ public class SudokuFrame extends JPanel {
                     printWriter.close();
 
                 }
-                if(found==true){
-                    JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
-                    System.out.println("WOOON! Please give me your username: ");
-                    Scanner sc= new Scanner(System.in);
-                    String username= sc.next();
-                    String fileName=username+"score.txt";
+                if (found && !found1) {
+                    if (found) {
+                        JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
+                        System.out.println("WOOON! Please give me your username: ");
+                        Scanner sc = new Scanner(System.in);
+                        String username = sc.next();
+                        String fileName = username + "score.txt";
 
-                    //First read from the File.
-                    File file = new File(fileName);
+                        //First read from the File.
+                        File file = new File(fileName);
 
-                    BufferedReader br = null;
-                    try {
-                        br = new BufferedReader(new FileReader(file));
-                    } catch (FileNotFoundException ex) {
-                        ex.printStackTrace();
-                    }
-
-                    String value1 = null;
-                    String st = null;
-                    while (true) {
+                        BufferedReader br = null;
                         try {
-                            if (!((st = br.readLine()) != null)) break;
-                            value1=st;
-                        } catch (IOException ex) {
+                            br = new BufferedReader(new FileReader(file));
+                        } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
                         }
 
+                        String value1 = null;
+                        String st = null;
+                        while (true) {
+                            try {
+                                if (!((st = br.readLine()) != null)) break;
+                                value1 = st;
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+
+                        }
+
+                        //Then add the score.
+                        FileWriter fileWriter = null;
+                        try {
+                            fileWriter = new FileWriter(fileName, false);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        PrintWriter printWriter = new PrintWriter(fileWriter);
+                        int value2 = Integer.parseInt(value1);
+                        value2++;
+                        printWriter.print(value2);
+
+                        printWriter.close();
+
                     }
-
-                    //Then add the score.
-                    FileWriter fileWriter = null;
-                    try {
-                        fileWriter = new FileWriter(fileName,false);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    PrintWriter printWriter = new PrintWriter(fileWriter);
-                    int value2=Integer.parseInt(value1);
-                    value2++;
-                    printWriter.print(value2);
-
-                    printWriter.close();
-
                 }
             });
 
@@ -420,40 +419,78 @@ public class SudokuFrame extends JPanel {
             statistics.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
+                    MyDrawPanel draw;
+                    JFrame frame=new JFrame("Hints");
+                    JPanel panel=new JPanel();
+                    draw=new MyDrawPanel();
 
-                    f.dispose();
-                   JFrame frame1= new JFrame();
-                   frame1.setSize(300,200);
-                   frame1.setTitle("Statistics");
-                   frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                   frame1.setVisible(true);
+                    frame.getContentPane().add(BorderLayout.CENTER,draw);
+                    frame.getContentPane().add(panel,BorderLayout.NORTH);
+                    frame.setSize(700,400);
 
-                   System.out.println("Confirm your username: ");
-                   Scanner x= new Scanner(System.in);
-                   String username= x.nextLine();
+                    Toolkit t = Toolkit.getDefaultToolkit();
+                    Dimension d = t.getScreenSize();
+                    int x = (d.width-frame.getWidth())/2;
+                    int y = (d.height-frame.getHeight())/2;
+                    frame.setLocation(x, y);
 
+                    //Set Image Icon
+                    ImageIcon icon= new ImageIcon();
+                    try {
+                        frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                    }
+                    catch(IOException ex) {
+                        System.out.println("When reading icon file: " + ex.getMessage());
+                    }
+
+                    System.out.println("Confirm your username: ");
+                    Scanner sc= new Scanner(System.in);
+                    String username= sc.nextLine();
 
                     JTextField field= new JTextField();
-                   field.setSize(10,10);
+                    field.setSize(10,10);
+                    field.setEditable(false);
                     try {
-                        String filename=username+".txt";
+                        String filename=username+"score.txt";
                         BufferedReader br = new BufferedReader(new FileReader(filename));
                         String st;
                         while ((st = br.readLine()) != null)
-                        field.setText(st);
+                            field.setText(st);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
 
-                   JLabel label= new JLabel("Your statistics: ");
+                    JLabel label= new JLabel(username+"'s statistics: ");
+                    panel.add(label);
+                    panel.add(field);
+                    panel.setBackground(Color.LIGHT_GRAY);
 
-                   JPanel panel= new JPanel();
-                   panel.add(label);
-                   panel.add(field);
 
-                    frame1.add(panel);
+                    try {
+                        String filename=username+"score.txt";
+                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        String st;
+                        while ((st = br.readLine()) != null)
+                            field.setText(st);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                    frame.setVisible(true);
                 }
+                class MyDrawPanel extends JPanel
+                {
+                    @Override
+                    public void paintComponent(Graphics g)
+                    {
+                        Image image=new ImageIcon("3.jpg").getImage();
+                        g.drawImage(image,90,20,500,200,this);
+                    }
+                }
+
             });
             returnb.addActionListener(new ActionListener() {
                 @Override

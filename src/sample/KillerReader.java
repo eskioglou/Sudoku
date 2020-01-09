@@ -29,7 +29,7 @@ public class KillerReader {
 
     File selectFile(){
         File file;
-        file= new File("C:\\Users\\USER\\Desktop\\sudoku-3237_3116\\src\\sample\\killer\\k1.txt");
+        file= new File("src/sample/killer/k1.txt");
         return file;
     }
 
