@@ -165,7 +165,7 @@ public class KillerFrame extends JPanel {
                 }
                 if (startingKiller[i - 1][j - 1] == 19) {
                     Tf[i][j].setBackground(Color.ORANGE);
-                    Tf[i][j].setText("");
+                    Tf[i][j].setText("0");
                     Tf[i][j].setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.black));
 
                 }
@@ -330,47 +330,48 @@ public class KillerFrame extends JPanel {
                 }
             }
 
-            JButton b = new JButton("Solve");
-            f.add(b);
-            b.addActionListener(e -> {
-                int[][] endingSudoku = reader.getSolvedKiller();
-                int[][] startingSudoku1 = reader.getUnsolvedKiller();
+        JButton b= new JButton("Solve");
+        f.add(b);
+        b.addActionListener(e -> {
+            int[][] endingSudoku = reader.getSolvedKiller();
+            int[][] startingSudoku1= reader.getUnsolvedKiller();
 
-                for (int i = 1; i <= dimension; i++) {
-                    for (int j = 1; j <= dimension; j++) {
-                        String n = Tf[i][j].getText();
+            for (int i = 1; i <= dimension; i++) {
+                for (int j = 1; j <= dimension; j++) {
+                    String n=Tf[i][j].getText();
+                    int result = parseInt(n);
+                    if(endingSudoku[i-1][j-1]==result){
+                        Tf[i][j].setBackground(Color.GREEN);
 
-                        int result = parseInt(n);
-                        if (endingSudoku[i - 1][j - 1] == result && result != startingSudoku1[i - 1][j - 1]) {
-                            Tf[i][j].setBackground(Color.GREEN);
+                    }
+                    else if(endingSudoku[i-1][j-1]!=result){
+                        Tf[i][j].setBackground(Color.RED);
 
-                        } else if (endingSudoku[i - 1][j - 1] != result) {
-                            Tf[i][j].setBackground(Color.RED);
-
-                        }
-                        Tf[i][j].setText(endingSudoku[i - 1][j - 1] + "");
+                    }
+                    Tf[i][j].setText(endingSudoku[i-1][j-1] +"");
+                }
+            }
+            Boolean found= false;
+            Boolean found1=false;
+            for (int i = 1; i <= dimension; i++) {
+                for (int j = 1; j <= dimension; j++) {
+                    if(Tf[i][j].getBackground()==Color.GREEN) {
+                        found=true;
+                        found1=false;
+                    }
+                    else{
+                        found1=true;
+                        found=false;
                     }
                 }
-                Boolean found = false;
-                Boolean found1 = false;
-                for (int i = 1; i <= dimension; i++) {
-                    for (int j = 1; j <= dimension; j++) {
-                        if (Tf[i][j].getBackground() == Color.GREEN) {
-                            found = true;
-                            found1 = false;
-                        } else {
-                            found1 = true;
-                            found = false;
-                        }
-                    }
-                }
-                if (!found && found1) {
-                    JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
-                }
-                if (found && !found1) {
-                    JOptionPane.showMessageDialog(null, "You won the game!", "Congratulations", 1);
-                }
-            });
+            }
+            if(!found&&found1) {
+                JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+            }
+            if(found&&!found1){
+                JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+            }
+        });
 
 
             JButton save = new JButton("Save");

@@ -29,7 +29,7 @@ public class KillerReader {
 
     File selectFile(){
         File file;
-        file= new File("src/sample/killer/k1.txt");
+        file= new File("killer/k1.txt");
         return file;
     }
 
