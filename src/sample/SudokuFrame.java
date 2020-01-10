@@ -12,7 +12,15 @@ import java.util.ResourceBundle;
 
 import static java.lang.Integer.parseInt;
 import static sample.Confirmation.textfield;
-
+/**
+ * This class opens the Sudoku game with graphics.
+ *
+ *
+ * Initialization and ActionListener for the JTextField cells of the Sudoku matrix by Paschalina Lyssoudi
+ * @author Paschalina lyssoudi
+ * Frame, all buttons, menu and graphic interfaces with their ActionListeners by Maria Eskioglou
+ * @author Maria Eskioglou
+ */
 public class SudokuFrame extends JPanel {
         private JFrame f;
         public String score="0";
@@ -48,7 +56,11 @@ public class SudokuFrame extends JPanel {
                 System.out.println("When reading icon file: " + ex.getMessage());
             }
 
-
+        /**
+         * Creates the type JTextField matrix Tf with the file chosen by the class SudokuReader
+         * Sets the cells with a value different than 0 unreadable, because they should not change during the game
+         * Adds each cell to the Frame
+         */
             SudokuReader reader= new SudokuReader(9);
             int[][] startingSudoku= reader.getUnsolvedSudoku();
             for (int i = 1; i <= dimension; i++) {
@@ -62,7 +74,11 @@ public class SudokuFrame extends JPanel {
                     f.add(Tf[i][j]);
                 }
             }
-
+        /**
+         * Adds ActionListener to each type JTextField cell of the matrix
+         * Reads the value the player types, and performs needed Checks using a class Check object
+         * Shows pop-up messages for acceptable or unacceptable values given
+         */
             for(int i = 1; i<= dimension; i++){
                 for(int j = 1; j<=dimension; j++){
                     int k = i;

@@ -12,7 +12,14 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
-
+/**
+ * This class is a duplicate of SudokuFrame with a few changes necessary for loading a specific saved version of the Sudoku game.
+ *
+ * Initialization and ActionListener for the JTextField cells of the Sudoku matrix by Paschalina Lyssoudi
+ * @author Paschalina lyssoudi
+ * Frame, all buttons, menu and graphic interfaces with their ActionListeners by Maria Eskioglou
+ * @author Maria Eskioglou
+ */
 public class SudokuFrame1 extends JPanel {
     private JFrame f;
     //---------------LANGUAGE ADDITION------------------------

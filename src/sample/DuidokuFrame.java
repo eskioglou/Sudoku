@@ -8,7 +8,15 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
+/**
+ * This class opens the Duidoku game with graphics.
+ *
+ *
+ * Initialization and ActionListener for the JTextField cells of the Duidoku matrix by Paschalina Lyssoudi
+ * @author Paschalina lyssoudi
+ * Frame, all buttons, menu and graphic interfaces with their ActionListeners by Maria Eskioglou
+ * @author Maria Eskioglou
+ */
 public class DuidokuFrame extends JPanel {
     private JFrame f;
 
@@ -41,6 +49,10 @@ public class DuidokuFrame extends JPanel {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
+        /**
+         * Creates the type JTextField matrix Tf With dimension 4 and initializes it with text 0
+         * Adds each cell to the Frame
+         */
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
                 Tf[i][j] = new JTextField();
@@ -49,7 +61,13 @@ public class DuidokuFrame extends JPanel {
             }
         }
 
-
+        /**
+         * Adds ActionListener to each type JTextField cell of the matrix
+         * Reads the value the player types, and performs needed Checks using a class DuiCheck object
+         * If acceptance tests pass, inactivates cells that have no acceptable values using method makeInactive of object from class DuiCheck
+         * Continues with a computer move and its acceptance checks using movePC of object from class DuiCheck
+         * Shows pop-up messages for acceptable or unacceptable values given, and whether it is player's time to make a move
+         */
         for(int i = 1; i<= dimension; i++){
             for(int j = 1; j<=dimension; j++){
                 int k = i;
