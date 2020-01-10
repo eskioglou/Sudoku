@@ -10,20 +10,30 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.io.*;
-import java.sql.SQLException;
+//--------LANGUAGE ADDITION-----------
+import java.util.Locale;
+import java.util.ResourceBundle;
+//------------------------------------
 import java.util.Scanner;
-import javax.swing.border.EmptyBorder;
 
 public class Welcome {
     SecondWindow.MyDrawPanel draw;
     JButton signIn;
     JButton signUp;
     JButton anon;
+    private ResourceBundle bundle;
 
     public Welcome() {
+        //---------------LANGUAGE ADDITION------------------------
+        Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
+        bundle = ResourceBundle.getBundle("Languages", loc);
+//--------------------------------------------------------
         JFrame frame = new JFrame("Sudoku Game");
         JPanel panel = new JPanel();
         draw = new SecondWindow.MyDrawPanel();
+
+        JButton playButton = new JButton(bundle.getString("PLAY!"));
+        panel.add(playButton);
 
         signIn = new JButton();
         signUp = new JButton();
@@ -64,7 +74,7 @@ public class Welcome {
                     System.out.println("When reading icon file: " + ex.getMessage());
                 }
 
-                nameLabel.setBounds(20, 80, 40, 70);
+                nameLabel.setBounds(20, 10, 80, 70);
                 passwordLabel.setBounds(20, 70, 100, 70);
                 nameTextField.setBounds(180, 43, 165, 23);
                 passwordField.setBounds(180, 93, 165, 23);
