@@ -5,8 +5,8 @@ import java.util.ListResourceBundle;
  */
 public class Languages_en extends ListResourceBundle {
     /**
-     * Επιστρέφει τα περιεχόμενα του πίνακα με τις μεταφράσεις.
-     * @return τον πίνακα.
+     * Returns the contents of the matrix with the translation.
+     * @return the matrix.
      */
     @Override
     public Object[][] getContents() {

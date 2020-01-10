@@ -51,7 +51,6 @@ public class CheckKiller extends Check {
         for(int i = 0; i<counter; i++){
             add+= group[i];
         }
-        System.out.println(add);
         if(zero){
             return add < mustSum;
         }else{

@@ -5,14 +5,27 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static java.lang.Integer.parseInt;
+import static sample.Confirmation.textfield;
+
+/**
+ * This class creates the frame for the Killer window. There is also the Language Addition that initializes the Locale using the language of the
+ * system. If the computer's language is Greek, it accesses the Languages_Ελληνικά and transforms the words. Same goes if the computer's
+ * language is English. The frame is located in the center, it includes an icon and contains 3 buttons Solve, Save and Hint. The Solve button
+ * counts the number of the green backgrounds and the number of the red. If all cells are green, it shows a message that the game is won and if
+ * it contains at least a red cell, the game is lost. The solve button also creates a file with the name usernmame+"score.txt" and initializes
+ * with the value 0, if the game is lost and with the value 1, if the game is won.For the next games if the game is won it adds 1 point, else it
+ * adds 0 points.The Save button opens a confirmation window and once you enter the username it stores the value
+ * of the matrix at the given time in a txt file with the name username+".txt". The Hint button opens another window in which you give the number
+ * of the row and the column you want to check and shows a list of all the acceptable numbers using checks from the CheckKiller. The Killer
+ * Frame also has a method that returns the menu. The buildmenu method is described below.
+ *
+ * @author Maria Eskioglou
+ */
 
 public class KillerFrame extends JPanel {
     private JFrame f;
@@ -350,7 +363,7 @@ public class KillerFrame extends JPanel {
         f.add(b);
         b.addActionListener(e -> {
             int[][] endingSudoku = reader.getSolvedKiller();
-            int[][] startingSudoku1= reader.getUnsolvedKiller();
+            reader.getUnsolvedKiller();
 
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
@@ -367,8 +380,8 @@ public class KillerFrame extends JPanel {
                     Tf[i][j].setText(endingSudoku[i-1][j-1] +"");
                 }
             }
-            Boolean found= false;
-            Boolean found1=false;
+            boolean found= false;
+            boolean found1=false;
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
                     if(Tf[i][j].getBackground()==Color.GREEN) {
@@ -382,10 +395,10 @@ public class KillerFrame extends JPanel {
                 }
             }
             if(!found&&found1) {
-                JOptionPane.showMessageDialog(null, bundle.getString("You lost the game!"), bundle.getString("Try Again"), 1);
+                JOptionPane.showMessageDialog(null, bundle.getString("You lost the game!"), bundle.getString("Try Again"), JOptionPane.INFORMATION_MESSAGE);
             }
-            if(found&&!found1){
-                JOptionPane.showMessageDialog(null,bundle.getString("You won the game!"),bundle.getString("Congratulations"), 1);
+            if(found){
+                JOptionPane.showMessageDialog(null,bundle.getString("You won the game!"),bundle.getString("Congratulations"), JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -465,64 +478,63 @@ public class KillerFrame extends JPanel {
                 panel.add(text2);
                 panel.add(OK);
                 frame.add(panel, BorderLayout.CENTER);
-                OK.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        JFrame frame1 = new JFrame();
-                        frame1.setSize(300, 200);
-                        frame1.setTitle(bundle.getString("Acceptable Numbers"));
-                        frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        frame1.setVisible(true);
+                OK.addActionListener(actionEvent -> {
+                    JFrame frame1 = new JFrame();
+                    frame1.setSize(300, 200);
+                    frame1.setTitle(bundle.getString("Acceptable Numbers"));
+                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame1.setVisible(true);
 
-                        //Center View
-                        Toolkit t1 = Toolkit.getDefaultToolkit();
-                        Dimension d1 = t1.getScreenSize();
-                        int x1 = (d1.width - f.getWidth()) / 2;
-                        int y1 = (d1.height - f.getHeight()) / 2;
-                        frame1.setLocation(x1, y1);
+                    //Center View
+                    Toolkit t11 = Toolkit.getDefaultToolkit();
+                    Dimension d11 = t11.getScreenSize();
+                    int x11 = (d11.width - f.getWidth()) / 2;
+                    int y11 = (d11.height - f.getHeight()) / 2;
+                    frame1.setLocation(x11, y11);
 
-                        //Set Image Icon
-                        new ImageIcon();
-                        try {
-                            frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
-                        } catch (IOException ex) {
-                            System.out.println("When reading icon file: " + ex.getMessage());
-                        }
+                    //Set Image Icon
+                    new ImageIcon();
+                    try {
+                        frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                    } catch (IOException ex) {
+                        System.out.println("When reading icon file: " + ex.getMessage());
+                    }
 
-                        String row = text1.getText();
-                        String column = text2.getText();
-                        int k = Integer.parseInt(row);
-                        int l = Integer.parseInt(column);
+                    String row = text1.getText();
+                    String column = text2.getText();
+                    int k = Integer.parseInt(row);
+                    int l = Integer.parseInt(column);
 
-                        JLabel label1 = new JLabel();
-                        JLabel label2 = new JLabel();
-                        JLabel label3 = new JLabel();
-                        JLabel label4 = new JLabel();
-                        JLabel label5 = new JLabel();
-                        JLabel label6 = new JLabel();
-                        JLabel label7 = new JLabel();
-                        JLabel label8 = new JLabel();
-                        JLabel label9 = new JLabel();
-                        JPanel panel = new JPanel();
+                    JLabel label11 = new JLabel();
+                    JLabel label21 = new JLabel();
+                    JLabel label3 = new JLabel();
+                    JLabel label4 = new JLabel();
+                    JLabel label5 = new JLabel();
+                    JLabel label6 = new JLabel();
+                    JLabel label7 = new JLabel();
+                    JLabel label8 = new JLabel();
+                    JLabel label9 = new JLabel();
+                    JPanel panel1 = new JPanel();
 
-                        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-                        panel.add(label1);
-                        panel.add(label2);
-                        panel.add(label3);
-                        panel.add(label4);
-                        panel.add(label5);
-                        panel.add(label6);
-                        panel.add(label7);
-                        panel.add(label8);
-                        panel.add(label9);
+                    panel1.setLayout(new BoxLayout(panel1, BoxLayout.PAGE_AXIS));
+                    panel1.add(label11);
+                    panel1.add(label21);
+                    panel1.add(label3);
+                    panel1.add(label4);
+                    panel1.add(label5);
+                    panel1.add(label6);
+                    panel1.add(label7);
+                    panel1.add(label8);
+                    panel1.add(label9);
 
-                        frame1.add(panel);
+                    frame1.add(panel1);
 
+                    for(int z=0; z<45;z++) {
                         if (check.accept(k, l, 1)) {
-                            label1.setText(bundle.getString("1 is acceptable \n"));
+                                label11.setText(bundle.getString("1 is acceptable \n"));
                         }
                         if (check.accept(k, l, 2)) {
-                            label2.setText(bundle.getString("2 is acceptable \n"));
+                            label21.setText(bundle.getString("2 is acceptable \n"));
                         }
                         if (check.accept(k, l, 3)) {
                             label3.setText(bundle.getString("3 is acceptable \n"));
@@ -549,7 +561,13 @@ public class KillerFrame extends JPanel {
                 });
             });
         }
-
+    /**
+     * The buildMenu initializes all the menu items used and used the bundle.getString in every text to get the language of the system.
+     * New Game item leads to another Killer Frame. It clears all numbers set and initializes with a random set of colors.
+     * Load Game item doesn't work with the Killer Frame.
+     * Statistics doesn't work in the DuidokuFrame.
+     * Return leads back to the SecondWindow and the user can choose from the start another version.
+     */
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu(bundle.getString("Menu"));
@@ -558,33 +576,100 @@ public class KillerFrame extends JPanel {
         JMenuItem statistics= new JMenuItem(bundle.getString("Statistics"));
         JMenuItem returnb = new JMenuItem(bundle.getString("Return"));
 
-        newgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new KillerFrame(9);
-            }
+        newgame.addActionListener(actionEvent -> {
+            f.dispose();
+            new KillerFrame(9);
         });
-        loadgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new KillerFrame(9);
+        loadgame.addActionListener(actionEvent -> {
+            f.dispose();
+            new KillerFrame(9);
 
-            }
         });
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-            }
+                f = new JFrame(bundle.getString("Confirmation"));
+                JLabel label = new JLabel(bundle.getString("Please confirm your username:"));
+                JButton button = new JButton(bundle.getString("Submit"));
+                textfield = new JTextField(16);
+                JPanel panel = new JPanel();
+                button.addActionListener(actionEvent1 -> {
+                    MyDrawPanel draw;
+                    String username1= textfield.getText();
+                    JFrame frame = new JFrame(username1+"'s Statistics");
+                    JPanel panel1 = new JPanel();
+                    draw = new MyDrawPanel();
+
+                    frame.getContentPane().add(BorderLayout.CENTER, draw);
+                    frame.getContentPane().add(panel1, BorderLayout.NORTH);
+                    frame.setSize(700, 400);
+
+                    Toolkit t = Toolkit.getDefaultToolkit();
+                    Dimension d = t.getScreenSize();
+                    int x = (d.width - frame.getWidth()) / 2;
+                    int y = (d.height - frame.getHeight()) / 2;
+                    frame.setLocation(x, y);
+
+                    //Set Image Icon
+                    new ImageIcon();
+                    try {
+                        frame.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                    } catch (IOException ex) {
+                        System.out.println("When reading icon file: " + ex.getMessage());
+                    }
+
+                    JTextField field = new JTextField();
+                    field.setSize(10, 10);
+                    field.setEditable(false);
+                    try {
+                        String filename = username1 + "score.txt";
+                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        String st;
+                        while ((st = br.readLine()) != null)
+                            field.setText(st);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    JLabel label1 = new JLabel(username1 + "'s statistics: ");
+                    panel1.add(label1);
+                    panel1.add(field);
+                    panel1.setBackground(Color.LIGHT_GRAY);
+
+                    try {
+                        String filename = username1 + "score.txt";
+                        BufferedReader br = new BufferedReader(new FileReader(filename));
+                        String st;
+                        while ((st = br.readLine()) != null)
+                            field.setText(st);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    frame.setVisible(true);
+
+                });
+
+                panel.add(label);
+                panel.add(textfield);
+                panel.add(button);
+
+                f.add(panel);
+                f.setSize(300, 100);
+                f.setVisible(true);}
+
+                class MyDrawPanel extends JPanel
+                {
+                    @Override
+                    public void paintComponent(Graphics g)
+                    {
+                        Image image=new ImageIcon("3.jpg").getImage();
+                        g.drawImage(image,90,20,500,200,this);
+                    }
+                }
         });
-        returnb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new SecondWindow();
-            }
+        returnb.addActionListener(actionEvent -> {
+            f.dispose();
+            new SecondWindow();
         });
 
         fileMenu.setText(bundle.getString("Menu"));
