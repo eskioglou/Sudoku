@@ -24,8 +24,6 @@ public class SudokuReader {
     }
 
     public SudokuReader(int dimensions,File file,int number) throws FileNotFoundException {
-        int random=0;
-        number=random;
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
 
@@ -56,7 +54,6 @@ public class SudokuReader {
         ArrayList<Integer> numbers = new ArrayList<>();
         fileScanner = new Scanner(file);
 
-        assert fileScanner != null;
         while (fileScanner.hasNextLine()) {
             Scanner lineScanner = new Scanner(fileScanner.nextLine());
             while (lineScanner.hasNext()) {
@@ -81,11 +78,10 @@ public class SudokuReader {
         }
     }
     private void ReadFile1(File file) throws FileNotFoundException {
-        Scanner fileScanner = null;
+        Scanner fileScanner;
         ArrayList<Integer> numbers = new ArrayList<>();
         fileScanner = new Scanner(file);
 
-        assert fileScanner != null;
         while (fileScanner.hasNextLine()) {
             Scanner lineScanner = new Scanner(fileScanner.nextLine());
             while (lineScanner.hasNext()) {
