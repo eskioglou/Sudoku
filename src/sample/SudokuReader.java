@@ -51,7 +51,6 @@ public class SudokuReader {
     public SudokuReader(int dimensions,File file,int number) throws FileNotFoundException {
         unsolvedSudoku = new int[dimensions+1][dimensions+1];
         solvedSudoku = new int[dimensions+1][dimensions+1];
-
         ReadFile1(file);
     }
     /**

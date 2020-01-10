@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
+
 /**
  * This class opens the Duidoku game with graphics.
  *
@@ -15,6 +16,13 @@ import java.util.ResourceBundle;
  * Initialization and ActionListener for the JTextField cells of the Duidoku matrix by Paschalina Lyssoudi
  * @author Paschalina lyssoudi
  * Frame, all buttons, menu and graphic interfaces with their ActionListeners by Maria Eskioglou
+ * This class creates the frame for the Duidoku window. There is also the Language Addition that initializes the Locale using the language of the
+ * system. If the computer's language is Greek, it accesses the Languages_Ελληνικά and transforms the words. Same goes if the computer's
+ * language is English. The frame is located in the center, it includes an icon and contains 3 buttons Solve, Save and Hint. The Solve button
+ * shows a message that you can't solve Duidoku. The Save button opens a confirmation window and once you enter the username it stores the value
+ * of the matrix at the given time in a txt file with the name username+".txt". The Hint button opens another window in which you give the number
+ * of the row and the column you want to check and shows a list of all the acceptable numbers using checks from the CheckDui. The DuidokuFrame also
+ * has a method that returns the menu. The buildmenu method is described below.
  * @author Maria Eskioglou
  */
 public class DuidokuFrame extends JPanel {
@@ -25,6 +33,11 @@ public class DuidokuFrame extends JPanel {
     ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
 //--------------------------------------------------------
 
+    /**
+     * DuidokuFrame's Constructor.
+     * It initializes all the swing elements used to build the frame and contains the buildMenu method.
+     * @param dimension In the specific case it's always 4.
+     */
     DuidokuFrame(int dimension) {
         f = new JFrame(bundle.getString("Duidoku Game"));
         JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
@@ -83,7 +96,6 @@ public class DuidokuFrame extends JPanel {
                                 bundle.getString("Error: Please enter number from 1 to 4"), bundle.getString("Error Message"),
                                 JOptionPane.ERROR_MESSAGE);
                     }else{
-                        boolean end = false;
                         boolean flag = check.accept(k, l, value);
                         if(flag){
                             String str = "" + value;
@@ -133,20 +145,14 @@ public class DuidokuFrame extends JPanel {
         }
         JButton b= new JButton(bundle.getString("Solve"));
         f.add(b);
-        b.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null,bundle.getString("You can't solve Duidoku. \n Please check Hint for help."));
-        });
+        b.addActionListener(e -> JOptionPane.showMessageDialog(null,bundle.getString("You can't solve Duidoku. \n Please check Hint for help.")));
 
         JButton save= new JButton(bundle.getString("Save"));
         f.add(save);
         save.addActionListener(e -> {
             Confirmation confirmation= new Confirmation();
-            String username= null;
-            try {
-                username = confirmation.getUsername();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            String username;
+            username = confirmation.getUsername();
             String filename= username+".txt";
 
             FileWriter fileWriter;
@@ -215,68 +221,73 @@ public class DuidokuFrame extends JPanel {
                 panel.add(text2);
                 panel.add(OK);
                 frame.add(panel, BorderLayout.CENTER);
-                OK.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent actionEvent) {
-                        JFrame frame1= new JFrame();
-                        frame1.setSize(300,200);
-                        frame1.setTitle(bundle.getString("Acceptable Numbers"));
-                        frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        frame1.setVisible(true);
+                OK.addActionListener(actionEvent -> {
+                    JFrame frame1= new JFrame();
+                    frame1.setSize(300,200);
+                    frame1.setTitle(bundle.getString("Acceptable Numbers"));
+                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame1.setVisible(true);
 
-                        //Center View
-                        Toolkit t1 = Toolkit.getDefaultToolkit();
-                        Dimension d1 = t1.getScreenSize();
-                        int x1 = (d1.width - f.getWidth()) / 2;
-                        int y1 = (d1.height - f.getHeight()) / 2;
-                        frame1.setLocation(x1, y1);
+                    //Center View
+                    Toolkit t11 = Toolkit.getDefaultToolkit();
+                    Dimension d11 = t11.getScreenSize();
+                    int x11 = (d11.width - f.getWidth()) / 2;
+                    int y11 = (d11.height - f.getHeight()) / 2;
+                    frame1.setLocation(x11, y11);
 
-                        //Set Image Icon
-                        new ImageIcon();
-                        try {
-                            frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
-                        } catch (IOException ex) {
-                            System.out.println("When reading icon file: " + ex.getMessage());
-                        }
+                    //Set Image Icon
+                    new ImageIcon();
+                    try {
+                        frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                    } catch (IOException ex) {
+                        System.out.println("When reading icon file: " + ex.getMessage());
+                    }
 
-                        String row = text1.getText();
-                        String column = text2.getText();
-                        int k=Integer.parseInt(row);
-                        int l= Integer.parseInt(column);
+                    String row = text1.getText();
+                    String column = text2.getText();
+                    int k=Integer.parseInt(row);
+                    int l= Integer.parseInt(column);
 
-                        JLabel label1= new JLabel();
-                        JLabel label2= new JLabel();
-                        JLabel label3= new JLabel();
-                        JLabel label4= new JLabel();
+                    JLabel label11 = new JLabel();
+                    JLabel label21 = new JLabel();
+                    JLabel label3= new JLabel();
+                    JLabel label4= new JLabel();
 
-                        JPanel panel= new JPanel();
+                    JPanel panel1 = new JPanel();
 
-                        panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
-                        panel.add(label1);
-                        panel.add(label2);
-                        panel.add(label3);
-                        panel.add(label4);
+                    panel1.setLayout(new BoxLayout(panel1,BoxLayout.PAGE_AXIS));
+                    panel1.add(label11);
+                    panel1.add(label21);
+                    panel1.add(label3);
+                    panel1.add(label4);
 
-                        frame1.add(panel);
+                    frame1.add(panel1);
 
-                        CheckDui check= new CheckDui(Tf,4);
+                    CheckDui check= new CheckDui(Tf,4);
 
-                        if (check.accept(k, l, 1)) {
-                            label1.setText(bundle.getString("1 is acceptable \n"));
-                        }
-                        if (check.accept(k, l, 2)) {
-                            label2.setText(bundle.getString("2 is acceptable \n"));
-                        }
-                        if (check.accept(k, l, 3)) {
-                            label3.setText(bundle.getString("3 is acceptable \n"));
-                        }
-                        if (check.accept(k, l, 4)) {
-                            label4.setText(bundle.getString("4 is acceptable \n"));
-                        }
+                    if (check.accept(k, l, 1)) {
+                        label11.setText(bundle.getString("1 is acceptable \n"));
+                    }
+                    if (check.accept(k, l, 2)) {
+                        label21.setText(bundle.getString("2 is acceptable \n"));
+                    }
+                    if (check.accept(k, l, 3)) {
+                        label3.setText(bundle.getString("3 is acceptable \n"));
+                    }
+                    if (check.accept(k, l, 4)) {
+                        label4.setText(bundle.getString("4 is acceptable \n"));
                     }
                 });
             });
     }
+
+    /**
+     * The buildMenu initializes all the menu items used and used the bundle.getString in every text to get the language of the system.
+     * New Game item leads to another Duidoku Frame. It clears all numbes set.
+     * Load Game item leads to DuidokuFrame1, which is identical with the DuidokuFrame with the exception that it loads a file.
+     * Statistics doesn't work in the DuidokuFrame.
+     * Return leads back to the SecondWindow and the user can choose from the start another version.
+     */
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();
         JMenu fileMenu = new JMenu(bundle.getString("Menu"));
@@ -285,39 +296,23 @@ public class DuidokuFrame extends JPanel {
         JMenuItem statistics= new JMenuItem(bundle.getString("Statistics"));
         JMenuItem returnb = new JMenuItem(bundle.getString("Return"));
 
-        newgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new DuidokuFrame(4);
-            }
+        newgame.addActionListener(actionEvent -> {
+            f.dispose();
+            new DuidokuFrame(4);
         });
-        loadgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                try {
-                    new DuidokuFrame1(4);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        loadgame.addActionListener(actionEvent -> {
+            f.dispose();
+            try {
+                new DuidokuFrame1(4);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
-        statistics.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-            }
-        });
-        returnb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new SecondWindow();
-            }
+        statistics.addActionListener(actionEvent -> f.dispose());
+        returnb.addActionListener(actionEvent -> {
+            f.dispose();
+            new SecondWindow();
         });
 
         fileMenu.setText(bundle.getString("Menu"));

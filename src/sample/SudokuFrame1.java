@@ -1,11 +1,8 @@
 package sample;
 
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -22,6 +19,7 @@ import static java.lang.Integer.parseInt;
  */
 public class SudokuFrame1 extends JPanel {
     private JFrame f;
+
     //---------------LANGUAGE ADDITION------------------------
     Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
     ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
@@ -53,11 +51,11 @@ public class SudokuFrame1 extends JPanel {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
-
-            Confirmation confirmation= new Confirmation();
-        String username= confirmation.getUsername();
-            String pathname= username+".txt";
-            File file1= new File(pathname);
+        System.out.println("!!!!!Please confirm your username: ");
+        Scanner xx= new Scanner(System.in);
+        String username=xx.nextLine();
+        String pathname= username+".txt";
+        File file1= new File(pathname);
 
         SudokuReader reader= new SudokuReader(9,file1);
         int[][] startingSudoku= reader.getUnsolvedSudoku();
@@ -124,8 +122,8 @@ public class SudokuFrame1 extends JPanel {
                     Tf[i][j].setText(endingSudoku[i][j] +"");
                 }
             }
-            Boolean found= false;
-            Boolean found1=false;
+            boolean found= false;
+            boolean found1=false;
             for (int i = 1; i <= dimension; i++) {
                 for (int j = 1; j <= dimension; j++) {
                     if(Tf[i][j].getBackground()==Color.GREEN) {
@@ -139,10 +137,10 @@ public class SudokuFrame1 extends JPanel {
                 }
             }
             if(!found&&found1) {
-                JOptionPane.showMessageDialog(null, bundle.getString("You lost the game!"), bundle.getString("Try Again"), 1);
+                JOptionPane.showMessageDialog(null, bundle.getString("You lost the game!"), bundle.getString("Try Again"), JOptionPane.INFORMATION_MESSAGE);
             }
-            if(found&&!found1){
-                JOptionPane.showMessageDialog(null,bundle.getString("You won the game!"),bundle.getString("Congratulations"), 1);
+            if(found){
+                JOptionPane.showMessageDialog(null,bundle.getString("You won the game!"),bundle.getString("Congratulations"), JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -222,86 +220,83 @@ public class SudokuFrame1 extends JPanel {
             panel.add(text2);
             panel.add(OK);
             frame.add(panel, BorderLayout.CENTER);
-            OK.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    JFrame frame1= new JFrame();
-                    frame1.setSize(300,200);
-                    frame1.setTitle(bundle.getString("Acceptable Numbers"));
-                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame1.setVisible(true);
+            OK.addActionListener(actionEvent -> {
+                JFrame frame1= new JFrame();
+                frame1.setSize(300,200);
+                frame1.setTitle(bundle.getString("Acceptable Numbers"));
+                frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame1.setVisible(true);
 
-                    //Center View
-                    Toolkit t1 = Toolkit.getDefaultToolkit();
-                    Dimension d1 = t1.getScreenSize();
-                    int x1 = (d1.width - f.getWidth()) / 2;
-                    int y1 = (d1.height - f.getHeight()) / 2;
-                    frame1.setLocation(x1, y1);
+                //Center View
+                Toolkit t11 = Toolkit.getDefaultToolkit();
+                Dimension d11 = t11.getScreenSize();
+                int x11 = (d11.width - f.getWidth()) / 2;
+                int y11 = (d11.height - f.getHeight()) / 2;
+                frame1.setLocation(x11, y11);
 
-                    //Set Image Icon
-                    new ImageIcon();
-                    try {
-                        frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
-                    } catch (IOException ex) {
-                        System.out.println("When reading icon file: " + ex.getMessage());
-                    }
+                //Set Image Icon
+                new ImageIcon();
+                try {
+                    frame1.setIconImage(ImageIO.read(new File("src/sample/512x512bb.jpg")));
+                } catch (IOException ex) {
+                    System.out.println("When reading icon file: " + ex.getMessage());
+                }
 
-                    String row = text1.getText();
-                    String column = text2.getText();
-                    int k=Integer.parseInt(row);
-                    int l= Integer.parseInt(column);
+                String row = text1.getText();
+                String column = text2.getText();
+                int k=Integer.parseInt(row);
+                int l= Integer.parseInt(column);
 
-                    JLabel label1= new JLabel();
-                    JLabel label2= new JLabel();
-                    JLabel label3= new JLabel();
-                    JLabel label4= new JLabel();
-                    JLabel label5= new JLabel();
-                    JLabel label6= new JLabel();
-                    JLabel label7= new JLabel();
-                    JLabel label8= new JLabel();
-                    JLabel label9= new JLabel();
-                    JPanel panel= new JPanel();
+                JLabel label11 = new JLabel();
+                JLabel label21 = new JLabel();
+                JLabel label3= new JLabel();
+                JLabel label4= new JLabel();
+                JLabel label5= new JLabel();
+                JLabel label6= new JLabel();
+                JLabel label7= new JLabel();
+                JLabel label8= new JLabel();
+                JLabel label9= new JLabel();
+                JPanel panel1 = new JPanel();
 
-                    panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
-                    panel.add(label1);
-                    panel.add(label2);
-                    panel.add(label3);
-                    panel.add(label4);
-                    panel.add(label5);
-                    panel.add(label6);
-                    panel.add(label7);
-                    panel.add(label8);
-                    panel.add(label9);
+                panel1.setLayout(new BoxLayout(panel1,BoxLayout.PAGE_AXIS));
+                panel1.add(label11);
+                panel1.add(label21);
+                panel1.add(label3);
+                panel1.add(label4);
+                panel1.add(label5);
+                panel1.add(label6);
+                panel1.add(label7);
+                panel1.add(label8);
+                panel1.add(label9);
 
-                    frame1.add(panel);
+                frame1.add(panel1);
 
-                    if (check.accept(k, l, 1)) {
-                        label1.setText(bundle.getString("1 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 2)) {
-                        label2.setText(bundle.getString("2 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 3)) {
-                        label3.setText(bundle.getString("3 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 4)) {
-                        label4.setText(bundle.getString("4 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 5)) {
-                        label5.setText(bundle.getString("5 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 6)) {
-                        label6.setText(bundle.getString("6 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 7)) {
-                        label7.setText(bundle.getString("7 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 8)) {
-                        label8.setText(bundle.getString("8 is acceptable \n"));
-                    }
-                    if (check.accept(k, l, 9)) {
-                        label9.setText(bundle.getString("9 is acceptable \n"));
-                    }
+                if (check.accept(k, l, 1)) {
+                    label11.setText(bundle.getString("1 is acceptable \n"));
+                }
+                if (check.accept(k, l, 2)) {
+                    label21.setText(bundle.getString("2 is acceptable \n"));
+                }
+                if (check.accept(k, l, 3)) {
+                    label3.setText(bundle.getString("3 is acceptable \n"));
+                }
+                if (check.accept(k, l, 4)) {
+                    label4.setText(bundle.getString("4 is acceptable \n"));
+                }
+                if (check.accept(k, l, 5)) {
+                    label5.setText(bundle.getString("5 is acceptable \n"));
+                }
+                if (check.accept(k, l, 6)) {
+                    label6.setText(bundle.getString("6 is acceptable \n"));
+                }
+                if (check.accept(k, l, 7)) {
+                    label7.setText(bundle.getString("7 is acceptable \n"));
+                }
+                if (check.accept(k, l, 8)) {
+                    label8.setText(bundle.getString("8 is acceptable \n"));
+                }
+                if (check.accept(k, l, 9)) {
+                    label9.setText(bundle.getString("9 is acceptable \n"));
                 }
             });
         });
@@ -315,41 +310,27 @@ public class SudokuFrame1 extends JPanel {
         JMenuItem statistics= new JMenuItem(bundle.getString("Statistics"));
         JMenuItem returnb = new JMenuItem(bundle.getString("Return"));
 
-        newgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                try {
-                    new SudokuFrame(9);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+        newgame.addActionListener(actionEvent -> {
+            f.dispose();
+            try {
+                new SudokuFrame(9);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         });
-        loadgame.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                try {
-                    new SudokuFrame1(9);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        loadgame.addActionListener(actionEvent -> {
+            f.dispose();
+            try {
+                new SudokuFrame1(9);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            }
         });
-        statistics.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-            }
-        });
-        returnb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                f.dispose();
-                new SecondWindow();
-            }
+        statistics.addActionListener(actionEvent -> f.dispose());
+        returnb.addActionListener(actionEvent -> {
+            f.dispose();
+            new SecondWindow();
         });
 
         fileMenu.setText(bundle.getString("Menu"));
