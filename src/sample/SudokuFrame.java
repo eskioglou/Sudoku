@@ -407,6 +407,16 @@ public class SudokuFrame extends JPanel {
                     });
             });
 
+        JButton wordoku= new JButton("Wordoku");
+        f.add(wordoku);
+        wordoku.addActionListener(e -> {
+
+            WordokuChanges wch = new WordokuChanges(9, Tf);
+            wch.changeA();
+
+
+        });
+
             }
         private void buildMenu() {
             JMenuBar bar = new JMenuBar();
