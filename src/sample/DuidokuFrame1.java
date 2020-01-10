@@ -36,10 +36,8 @@ public class DuidokuFrame1 extends JPanel {
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
-
-        System.out.println("!!!!!Please confirm your username: ");
-        Scanner xx= new Scanner(System.in);
-        String username=xx.nextLine();
+        Confirmation confirmation= new Confirmation();
+        String username= confirmation.getUsername();
         String pathname= username+".txt";
         File file1= new File(pathname);
 
@@ -48,7 +46,7 @@ public class DuidokuFrame1 extends JPanel {
         for (int i = 1; i <= dimension; i++) {
             for (int j = 1; j <= dimension; j++) {
                 Tf[i][j] = new JTextField();
-                Tf[i][j].setText(array[i][j] + " ");
+                Tf[i][j].setText(array[i][j] + "");
                 f.add(Tf[i][j]);
             }
         }
@@ -129,8 +127,8 @@ public class DuidokuFrame1 extends JPanel {
             FileWriter fileWriter;
             try {
 
-                Confirmation confirmation = new Confirmation();
-                String username1 = confirmation.getUsername();
+                Confirmation confirmation1 = new Confirmation();
+                String username1 = confirmation1.getUsername();
                 String filename = username1 + ".txt";
                 fileWriter = new FileWriter(filename, false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);

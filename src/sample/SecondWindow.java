@@ -69,18 +69,6 @@ public class SecondWindow
             System.out.println("When reading icon file: " + ex.getMessage());
         }
 
-        //Set Audio to help concentration.
-        try {
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(Main.class.getResource("Chopin - Spring Waltz.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.start();
-        } catch(Exception ex) {
-            System.out.println("Error with playing sound.");
-            ex.printStackTrace();
-        }
-
-
         frame.setVisible(true);
     }
     public static class MyDrawPanel extends JPanel

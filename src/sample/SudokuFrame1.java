@@ -41,9 +41,8 @@ public class SudokuFrame1 extends JPanel {
         }
 
 
-            System.out.println("!!!!!Please confirm your username: ");
-            Scanner xx= new Scanner(System.in);
-            String username=xx.nextLine();
+            Confirmation confirmation= new Confirmation();
+        String username= confirmation.getUsername();
             String pathname= username+".txt";
             File file1= new File(pathname);
 
@@ -142,8 +141,8 @@ public class SudokuFrame1 extends JPanel {
             FileWriter fileWriter;
             try {
 
-                Confirmation confirmation= new Confirmation();
-                String username1=confirmation.getUsername();
+                Confirmation confirmation1= new Confirmation();
+                String username1=confirmation1.getUsername();
                 String filename= username1+".txt";
                 fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);

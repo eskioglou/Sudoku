@@ -6,9 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.io.*;
-import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 import static sample.Confirmation.textfield;
@@ -51,7 +49,6 @@ public class SudokuFrame extends JPanel {
                 for (int j = 1; j <= dimension; j++) {
                     Tf[i][j] = new JTextField();
                     Tf[i][j].setText(startingSudoku[i][j] +"");
-                    Tf[i][j].setToolTipText("100");
                     if(startingSudoku[i][j]!=0) {
                         Tf[i][j].setFont(new Font("Tahoma", Font.BOLD, 14));
                         Tf[i][j].setEditable(false);
@@ -143,7 +140,7 @@ public class SudokuFrame extends JPanel {
                     }
 
                     String value = null;
-                    String st = null;
+                    String st;
                     while (true) {
                         try {
                             if (!((st = br.readLine()) != null)) break;
@@ -189,7 +186,7 @@ public class SudokuFrame extends JPanel {
                         }
 
                         String value1 = null;
-                        String st = null;
+                        String st;
                         while (true) {
                             try {
                                 if (!((st = br.readLine()) != null)) break;

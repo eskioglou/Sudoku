@@ -6,11 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.util.Scanner;
 
 public class DuidokuFrame extends JPanel {
     private JFrame f;
-
 
     DuidokuFrame(int dimension) {
         f = new JFrame("Duidoku Game");
@@ -43,6 +41,8 @@ public class DuidokuFrame extends JPanel {
                 f.add(Tf[i][j]);
             }
         }
+
+
         for(int i = 1; i<= dimension; i++){
             for(int j = 1; j<=dimension; j++){
                 int k = i;
@@ -115,13 +115,17 @@ public class DuidokuFrame extends JPanel {
         JButton save= new JButton("Save");
         f.add(save);
         save.addActionListener(e -> {
+            Confirmation confirmation= new Confirmation();
+            String username= null;
+            try {
+                username = confirmation.getUsername();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            String filename= username+".txt";
 
             FileWriter fileWriter;
             try {
-
-                Confirmation confirmation= new Confirmation();
-                String username=confirmation.getUsername();
-                String filename= username+".txt";
                 fileWriter = new FileWriter(filename,false);
                 PrintWriter printWriter = new PrintWriter(fileWriter);
 
@@ -228,9 +232,7 @@ public class DuidokuFrame extends JPanel {
                         panel.add(label3);
                         panel.add(label4);
 
-
                         frame1.add(panel);
-
 
                         CheckDui check= new CheckDui(Tf,4);
 
@@ -247,8 +249,6 @@ public class DuidokuFrame extends JPanel {
                             label4.setText("4 is acceptable \n");
                         }
                     }
-
-
                 });
             });
     }

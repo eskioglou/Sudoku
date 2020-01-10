@@ -10,6 +10,7 @@ public class CheckDui extends Check{
     private int numj2;
     private int val;
 
+
     public CheckDui(JTextField[][] Tf, int dimension) {
         super(Tf, dimension);
         changeInt();
@@ -70,21 +71,4 @@ public class CheckDui extends Check{
         return cell == 0;
     }
 
-    public boolean endDuidokuGame(){
-        int zeros=0;
-        for(int i = 0; i<4; i++){
-            for(int j = 0; j<4; j++){
-                int cell = play[i][j];
-                if(cell == 0){
-                    zeros++;
-                }
-            }
-        }
-        System.out.println("in end");
-        if(zeros == 0){
-            System.out.println("Game finished");
-            return true;
-        }
-        return false;
-    }
 }

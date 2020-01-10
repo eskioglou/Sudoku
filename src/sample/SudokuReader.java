@@ -51,7 +51,6 @@ public class SudokuReader {
         return file1;
     }
 
-
     private void ReadFile(File file) throws FileNotFoundException {
         Scanner fileScanner;
         ArrayList<Integer> numbers = new ArrayList<>();
@@ -102,6 +101,5 @@ public class SudokuReader {
                 k++;
             }
         }
-
     }
 }
