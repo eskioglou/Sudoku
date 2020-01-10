@@ -9,15 +9,21 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class SecondWindow
 {
+    //---------------LANGUAGE ADDITION------------------------
+    Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
+    ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
+//--------------------------------------------------------
 
     MyDrawPanel draw;
 
     public SecondWindow()
     {
-        JFrame frame=new JFrame("Sudoku Game");
+        JFrame frame=new JFrame(bundle.getString("Sudoku Game"));
         JPanel panel=new JPanel();
         draw= new MyDrawPanel();
 

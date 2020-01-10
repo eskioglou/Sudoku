@@ -21,38 +21,35 @@ public class Welcome {
     JButton signIn;
     JButton signUp;
     JButton anon;
-    private ResourceBundle bundle;
 
     public Welcome() {
-        //---------------LANGUAGE ADDITION------------------------
+//---------------LANGUAGE ADDITION------------------------
         Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
-        bundle = ResourceBundle.getBundle("Languages", loc);
+        ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
 //--------------------------------------------------------
-        JFrame frame = new JFrame("Sudoku Game");
+        JFrame frame = new JFrame(bundle.getString("Sudoku Game"));
         JPanel panel = new JPanel();
         draw = new SecondWindow.MyDrawPanel();
 
-        JButton playButton = new JButton(bundle.getString("PLAY!"));
-        panel.add(playButton);
 
         signIn = new JButton();
         signUp = new JButton();
         anon = new JButton();
 
 
-        signIn.setText("Sign In");
+        signIn.setText(bundle.getString("Sign In"));
         signIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JFrame frame1;
-                JLabel nameLabel = new JLabel("Username");
-                JLabel passwordLabel = new JLabel("Password");
+                JLabel nameLabel = new JLabel(bundle.getString("Username:"));
+                JLabel passwordLabel = new JLabel(bundle.getString("Password:"));
                 JTextField nameTextField = new JTextField();
                 JPasswordField passwordField = new JPasswordField();
-                JButton login = new JButton("Login");
+                JButton login = new JButton(bundle.getString("Login"));
 
                 frame1 = new JFrame();
-                frame1.setTitle("Login");
+                frame1.setTitle(bundle.getString("Login"));
                 frame1.setBounds(40, 40, 380, 300);
                 frame1.getContentPane().setBackground(Color.pink.darker());
                 frame1.getContentPane().setLayout(null);
@@ -121,7 +118,7 @@ public class Welcome {
                                 }
                             }
                         } catch (Exception e) {
-                            System.out.println("Error");
+                            System.out.println(bundle.getString("Error"));
                         }
                     }
                 });
@@ -129,19 +126,19 @@ public class Welcome {
         });
 
 
-        signUp.setText("Sign Up");
+        signUp.setText(bundle.getString("Sign Up"));
         signUp.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 JFrame frame1;
-                JLabel nameLabel = new JLabel("Username");
-                JLabel passwordLabel = new JLabel("Password");
+                JLabel nameLabel = new JLabel(bundle.getString("Username:"));
+                JLabel passwordLabel = new JLabel(bundle.getString("Password:"));
                 JTextField nameTextField = new JTextField();
                 JPasswordField passwordField = new JPasswordField();
-                JButton register = new JButton("Register");
+                JButton register = new JButton(bundle.getString("Register"));
 
                 frame1 = new JFrame();
-                frame1.setTitle("Registration");
+                frame1.setTitle(bundle.getString("Registration"));
                 frame1.setBounds(40, 40, 380, 300);
                 frame1.getContentPane().setBackground(Color.pink.darker());
                 frame1.getContentPane().setLayout(null);
@@ -205,7 +202,7 @@ public class Welcome {
             }
         });
 
-        anon.setText("Anonymous");
+        anon.setText(bundle.getString("Anonymous"));
         anon.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {

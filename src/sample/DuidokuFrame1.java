@@ -6,14 +6,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class DuidokuFrame1 extends JPanel {
     private JFrame f;
 
+    //---------------LANGUAGE ADDITION------------------------
+    Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
+    ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
+//--------------------------------------------------------
+
 
     DuidokuFrame1(int dimension) throws IOException {
-        f = new JFrame("Duidoku Game");
+        f = new JFrame(bundle.getString("Duidoku Game"));
         JTextField[][] Tf = new JTextField[dimension + 1][dimension + 1];
         f.setLayout(new GridLayout(dimension + 1, dimension));
         f.setSize(600, 500);
@@ -63,7 +70,7 @@ public class DuidokuFrame1 extends JPanel {
                         String str = "0";
                         Tf[k][l].setText(str);
                         JOptionPane.showMessageDialog(null,
-                                "Error: Please enter number from 1 to 4", "Error Message",
+                                bundle.getString("Error: Please enter number from 1 to 4"), bundle.getString("Error Message"),
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         boolean end = false;
@@ -83,7 +90,7 @@ public class DuidokuFrame1 extends JPanel {
                                     }
                                 }
                             }
-                            JOptionPane.showMessageDialog(null, "Value set");
+                            JOptionPane.showMessageDialog(null, bundle.getString("Value set"));
                             check.movePC();
                             int num = check.getVal();
                             String v = "" + num;
@@ -102,11 +109,11 @@ public class DuidokuFrame1 extends JPanel {
                                     }
                                 }
                             }
-                            JOptionPane.showMessageDialog(null, "Your turn to play");
+                            JOptionPane.showMessageDialog(null, bundle.getString("Your turn to play"));
                         } else {
                             String str = "0";
                             Tf[k][l].setText(str);
-                            JOptionPane.showMessageDialog(null, "Value could not be set");
+                            JOptionPane.showMessageDialog(null, bundle.getString("Value could not be set"));
                         }
 
                     }
@@ -114,13 +121,13 @@ public class DuidokuFrame1 extends JPanel {
                 });
             }
         }
-        JButton b = new JButton("Solve");
+        JButton b = new JButton(bundle.getString("Solve"));
         f.add(b);
         b.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "You can't solve Duidoku. \n Please check Hint for help.");
+            JOptionPane.showMessageDialog(null, bundle.getString("You can't solve Duidoku. \n Please check Hint for help."));
         });
 
-        JButton save = new JButton("Save");
+        JButton save = new JButton(bundle.getString("Save"));
         f.add(save);
         save.addActionListener(e -> {
 
@@ -150,7 +157,7 @@ public class DuidokuFrame1 extends JPanel {
             }
         });
 
-        JButton hint = new JButton("Hint");
+        JButton hint = new JButton(bundle.getString("Hint"));
         f.add(hint);
         hint.addActionListener(e -> {
             JButton OK;
@@ -181,14 +188,14 @@ public class DuidokuFrame1 extends JPanel {
             }
 
             label1 = new JLabel();
-            label1.setText("Row: ");
+            label1.setText(bundle.getString("Row: "));
             text1 = new JTextField(5);
 
             label2 = new JLabel();
-            label2.setText("Column: ");
+            label2.setText(bundle.getString("Column: "));
             text2 = new JTextField(5);
 
-            OK = new JButton("OK");
+            OK = new JButton(bundle.getString("OK"));
             panel = new JPanel(new GridLayout(3, 1));
             panel.add(label1);
             panel.add(text1);
@@ -201,7 +208,7 @@ public class DuidokuFrame1 extends JPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     JFrame frame1 = new JFrame();
                     frame1.setSize(300, 200);
-                    frame1.setTitle("Acceptable Numbers");
+                    frame1.setTitle(bundle.getString("Acceptable Numbers"));
                     frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame1.setVisible(true);
 
@@ -245,16 +252,16 @@ public class DuidokuFrame1 extends JPanel {
                     CheckDui check = new CheckDui(Tf, 4);
 
                     if (check.accept(k, l, 1)) {
-                        label1.setText("1 is acceptable \n");
+                        label1.setText(bundle.getString("1 is acceptable \n"));
                     }
                     if (check.accept(k, l, 2)) {
-                        label2.setText("2 is acceptable \n");
+                        label2.setText(bundle.getString("2 is acceptable \n"));
                     }
                     if (check.accept(k, l, 3)) {
-                        label3.setText("3 is acceptable \n");
+                        label3.setText(bundle.getString("3 is acceptable \n"));
                     }
                     if (check.accept(k, l, 4)) {
-                        label4.setText("4 is acceptable \n");
+                        label4.setText(bundle.getString("4 is acceptable \n"));
                     }
                 }
 
@@ -265,11 +272,11 @@ public class DuidokuFrame1 extends JPanel {
 
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();
-        JMenu fileMenu = new JMenu("Menu");
-        JMenuItem newgame = new JMenuItem("New Game");
-        JMenuItem loadgame= new JMenuItem("Load Game");
-        JMenuItem statistics= new JMenuItem("Statistics");
-        JMenuItem returnb = new JMenuItem("Return");
+        JMenu fileMenu = new JMenu(bundle.getString("Menu"));
+        JMenuItem newgame = new JMenuItem(bundle.getString("New Game"));
+        JMenuItem loadgame= new JMenuItem(bundle.getString("Load Game"));
+        JMenuItem statistics= new JMenuItem(bundle.getString("Statistics"));
+        JMenuItem returnb = new JMenuItem(bundle.getString("Return"));
 
         newgame.addActionListener(new ActionListener() {
             @Override
@@ -305,7 +312,7 @@ public class DuidokuFrame1 extends JPanel {
             }
         });
 
-        fileMenu.setText("Menu");
+        fileMenu.setText(bundle.getString("Menu"));
         fileMenu.add(newgame);
         fileMenu.add(loadgame);
         fileMenu.addSeparator();

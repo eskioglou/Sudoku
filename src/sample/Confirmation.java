@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
     class Confirmation extends JFrame  {
@@ -11,11 +13,16 @@ import java.util.Scanner;
         static JFrame f;
         static JButton button;
         static JLabel label;
-        Confirmation(){
 
-            f = new JFrame("Confirmation");
-            label = new JLabel("Please confirm your username: ");
-            button = new JButton("submit");
+        //---------------LANGUAGE ADDITION------------------------
+        Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
+        ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
+//--------------------------------------------------------
+
+        Confirmation(){
+            f = new JFrame(bundle.getString("Confirmation"));
+            label = new JLabel(bundle.getString("Please confirm your username:"));
+            button = new JButton(bundle.getString("Submit"));
             textfield = new JTextField(16);
             JPanel panel = new JPanel();
             button.addActionListener(new ActionListener() {
@@ -65,9 +72,5 @@ import java.util.Scanner;
                 username1 = sc.nextLine();
             }
             return username1;
-        }
-
-        public static void main(String[] args){
-            new sample.Confirmation();
         }
     }

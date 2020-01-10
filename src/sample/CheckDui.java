@@ -25,11 +25,9 @@ public class CheckDui extends Check{
                 numi = ran.nextInt(4);
                 numj = ran.nextInt(4);
             }while (play[numi][numj] != 0);
-            System.out.println("outside " +numi +", " +numj);
             v = 1 + ran.nextInt(4);
             acpt = super.accept(numi+1, numj+1, v);
             if(acpt){
-                System.out.println("accepted " +numi +", " +numj);
                 numi2 = numi;
                 numj2 = numj;
                 val = v;

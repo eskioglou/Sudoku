@@ -7,16 +7,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
 
 public class SudokuFrame1 extends JPanel {
     private JFrame f;
+    //---------------LANGUAGE ADDITION------------------------
+    Locale loc = new Locale(Locale.getDefault().getDisplayLanguage(), Locale.getDefault().getDisplayCountry());
+    ResourceBundle bundle = ResourceBundle.getBundle("Languages", loc);
+//--------------------------------------------------------
 
 
     public  SudokuFrame1(int dimension) throws IOException {
-        f = new JFrame("Sudoku Game");
+        f = new JFrame(bundle.getString("Sudoku Game"));
         JTextField[][] Tf = new JTextField[dimension+1][dimension+1];
         f.setLayout(new GridLayout(dimension+1, dimension));
         f.setSize(700, 600);
@@ -71,25 +77,25 @@ public class SudokuFrame1 extends JPanel {
                         String str = "0";
                         Tf[k][l].setText(str);
                         JOptionPane.showMessageDialog(null,
-                                "Error: Please enter number from 1 to 9", "Error Message",
+                                bundle.getString("Error: Please enter number from 1 to 9"), bundle.getString("Error Message"),
                                 JOptionPane.ERROR_MESSAGE);
                     }else{
                         boolean flag = check.accept(k, l, value);
                         if(flag){
                             String str = "" + value;
                             Tf[k][l].setText(str);
-                            JOptionPane.showMessageDialog(null, "Value set");
+                            JOptionPane.showMessageDialog(null, bundle.getString("Value set"));
                         }else{
                             String str = "0";
                             Tf[k][l].setText(str);
-                            JOptionPane.showMessageDialog(null, "Value could not be set");
+                            JOptionPane.showMessageDialog(null, bundle.getString("Value could not be set"));
                         }
                     }
                 });
             }
         }
 
-        JButton b= new JButton("Solve");
+        JButton b= new JButton(bundle.getString("Solve"));
         f.add(b);
         b.addActionListener(e -> {
             int[][] endingSudoku = reader.getSolvedSudoku();
@@ -126,15 +132,15 @@ public class SudokuFrame1 extends JPanel {
                 }
             }
             if(!found&&found1) {
-                JOptionPane.showMessageDialog(null, "You lost the game!", "Try Again", 1);
+                JOptionPane.showMessageDialog(null, bundle.getString("You lost the game!"), bundle.getString("Try Again"), 1);
             }
             if(found&&!found1){
-                JOptionPane.showMessageDialog(null,"You won the game!","Congratulations", 1);
+                JOptionPane.showMessageDialog(null,bundle.getString("You won the game!"),bundle.getString("Congratulations"), 1);
             }
         });
 
 
-        JButton save= new JButton("Save");
+        JButton save= new JButton(bundle.getString("Save"));
         f.add(save);
         save.addActionListener(e -> {
 
@@ -162,7 +168,7 @@ public class SudokuFrame1 extends JPanel {
 
         });
 
-        JButton hint= new JButton("Hint");
+        JButton hint= new JButton(bundle.getString("Hint"));
         f.add(hint);
         hint.addActionListener(e -> {
             JButton OK;
@@ -174,7 +180,7 @@ public class SudokuFrame1 extends JPanel {
             frame.setResizable(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setSize(300, 200);
-            frame.setTitle("Hints");
+            frame.setTitle(bundle.getString("Hint"));
             frame.setVisible(true);
 
             //Center View
@@ -194,11 +200,11 @@ public class SudokuFrame1 extends JPanel {
 
             Check check = new Check(Tf, 9);
             label1 = new JLabel();
-            label1.setText("Row: ");
+            label1.setText(bundle.getString("Row: "));
             text1 = new JTextField(5);
 
             label2 = new JLabel();
-            label2.setText("Column: ");
+            label2.setText(bundle.getString("Column: "));
             text2 = new JTextField(5);
 
             OK = new JButton("OK");
@@ -214,7 +220,7 @@ public class SudokuFrame1 extends JPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     JFrame frame1= new JFrame();
                     frame1.setSize(300,200);
-                    frame1.setTitle("Acceptable Numbers");
+                    frame1.setTitle(bundle.getString("Acceptable Numbers"));
                     frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame1.setVisible(true);
 
@@ -263,31 +269,31 @@ public class SudokuFrame1 extends JPanel {
                     frame1.add(panel);
 
                     if (check.accept(k, l, 1)) {
-                        label1.setText("1 is acceptable \n");
+                        label1.setText(bundle.getString("1 is acceptable \n"));
                     }
                     if (check.accept(k, l, 2)) {
-                        label2.setText("2 is acceptable \n");
+                        label2.setText(bundle.getString("2 is acceptable \n"));
                     }
                     if (check.accept(k, l, 3)) {
-                        label3.setText("3 is acceptable \n");
+                        label3.setText(bundle.getString("3 is acceptable \n"));
                     }
                     if (check.accept(k, l, 4)) {
-                        label4.setText("4 is acceptable \n");
+                        label4.setText(bundle.getString("4 is acceptable \n"));
                     }
                     if (check.accept(k, l, 5)) {
-                        label5.setText("5 is acceptable \n");
+                        label5.setText(bundle.getString("5 is acceptable \n"));
                     }
                     if (check.accept(k, l, 6)) {
-                        label6.setText("6 is acceptable \n");
+                        label6.setText(bundle.getString("6 is acceptable \n"));
                     }
                     if (check.accept(k, l, 7)) {
-                        label7.setText("7 is acceptable \n");
+                        label7.setText(bundle.getString("7 is acceptable \n"));
                     }
                     if (check.accept(k, l, 8)) {
-                        label8.setText("8 is acceptable \n");
+                        label8.setText(bundle.getString("8 is acceptable \n"));
                     }
                     if (check.accept(k, l, 9)) {
-                        label9.setText("9 is acceptable \n");
+                        label9.setText(bundle.getString("9 is acceptable \n"));
                     }
                 }
             });
@@ -296,11 +302,11 @@ public class SudokuFrame1 extends JPanel {
     }
     private void buildMenu() {
         JMenuBar bar = new JMenuBar();
-        JMenu fileMenu = new JMenu("Menu");
-        JMenuItem newgame = new JMenuItem("New Game");
-        JMenuItem loadgame= new JMenuItem("Load Game");
-        JMenuItem statistics= new JMenuItem("Statistics");
-        JMenuItem returnb = new JMenuItem("Return");
+        JMenu fileMenu = new JMenu(bundle.getString("Menu"));
+        JMenuItem newgame = new JMenuItem(bundle.getString("New Game"));
+        JMenuItem loadgame= new JMenuItem(bundle.getString("Load Game"));
+        JMenuItem statistics= new JMenuItem(bundle.getString("Statistics"));
+        JMenuItem returnb = new JMenuItem(bundle.getString("Return"));
 
         newgame.addActionListener(new ActionListener() {
             @Override
@@ -339,7 +345,7 @@ public class SudokuFrame1 extends JPanel {
             }
         });
 
-        fileMenu.setText("Menu");
+        fileMenu.setText(bundle.getString("Menu"));
         fileMenu.add(newgame);
         fileMenu.add(loadgame);
         fileMenu.addSeparator();
